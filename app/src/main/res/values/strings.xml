@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">Transpose</string>
+    <string name ="music_key">Key:</string>
+    <string name ="cmbutton">CM/am</string>
+    <string name="notes">Notes:</string>
+    <string name="notesrestsBT">Switch Notes/Rests</string>
+    <string name="accidentalsTV">Accidentals</string>
+    <string name="BPMTV">BPM:</string>
+    <string name="BPMET">120</string>
+    <string name="beatspermeasureTV">Beats Per Measure:</string>
+    <string name="beatspermeasureET">4</string>
+    <string name ="playBT">PLAY</string>
 </resources>

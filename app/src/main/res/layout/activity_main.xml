@@ -6,13 +6,223 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+
+
     <TextView
+        android:id="@+id/notesTV"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="35dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/notes"
+        android:textColor="@color/black"
+        android:textSize="25dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cmBT" />
+
+    <ImageView
+        android:id="@+id/staffIV"
+        android:layout_width="413dp"
+        android:layout_height="209dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/staff" />
+
+    <Button
+        android:id="@+id/cmBT"
+        android:layout_width="97dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="8dp"
+        android:text="@string/cmbutton"
+        app:layout_constraintStart_toEndOf="@+id/keyTV"
+        app:layout_constraintTop_toBottomOf="@+id/staffIV" />
+
+    <TextView
+        android:id="@+id/keyTV"
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:layout_marginStart="8dp"
+        android:text="@string/music_key"
+        android:textColor="@color/black"
+        android:textSize="25dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/staffIV" />
+
+    <ImageButton
+        android:id="@+id/wholenoteIB"
+        android:layout_width="65dp"
+        android:layout_height="130dp"
+        android:layout_marginStart="11dp"
+        android:layout_marginTop="68dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toStartOf="@+id/halfnoteIB"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/cmBT"
+        app:srcCompat="@drawable/wholenote" />
+
+    <ImageButton
+        android:id="@+id/halfnoteIB"
+        android:layout_width="65dp"
+        android:layout_height="130dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="68dp"
+        app:layout_constraintStart_toEndOf="@+id/wholenoteIB"
+        app:layout_constraintTop_toBottomOf="@+id/cmBT"
+        app:srcCompat="@drawable/halfnote" />
+
+    <ImageButton
+        android:id="@+id/quarternoteIB"
+        android:layout_width="65dp"
+        android:layout_height="130dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toEndOf="@+id/halfnoteIB"
+        app:layout_constraintTop_toBottomOf="@+id/notesTV"
+        app:srcCompat="@drawable/quarternote" />
+
+    <ImageButton
+        android:id="@+id/eighthnoteIB"
+        android:layout_width="65dp"
+        android:layout_height="130dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="103dp"
+        app:layout_constraintStart_toEndOf="@+id/quarternoteIB"
+        app:layout_constraintTop_toBottomOf="@+id/staffIV"
+        app:srcCompat="@drawable/eighthnote" />
+
+    <ImageButton
+        android:id="@+id/sixteenthnoteIB"
+        android:layout_width="65dp"
+        android:layout_height="130dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="103dp"
+        android:layout_marginEnd="11dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/eighthnoteIB"
+        app:layout_constraintTop_toBottomOf="@+id/staffIV"
+        app:srcCompat="@drawable/sixteenthnote" />
+
+    <Button
+        android:id="@+id/notesrestsBT"
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/notesrestsBT"
+        app:layout_constraintStart_toEndOf="@+id/notesTV"
+        app:layout_constraintTop_toBottomOf="@+id/cmBT" />
+
+    <TextView
+        android:id="@+id/accidentalsTV"
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:layout_marginStart="139dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="140dp"
+        android:text="@string/accidentalsTV"
+        android:textColor="@color/black"
+        android:textSize="25dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/halfnoteIB" />
+
+    <ImageButton
+        android:id="@+id/sharpIB"
+        android:layout_width="80dp"
+        android:layout_height="115dp"
+        android:layout_marginStart="44dp"
+        android:layout_marginTop="64dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/wholenoteIB"
+        app:srcCompat="@drawable/sharpaccidental" />
+
+    <ImageButton
+        android:id="@+id/natrualIB"
+        android:layout_width="80dp"
+        android:layout_height="115dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="12dp"
+        app:layout_constraintStart_toEndOf="@+id/sharpIB"
+        app:layout_constraintTop_toBottomOf="@+id/accidentalsTV"
+        app:srcCompat="@drawable/naturalaccidental" />
+
+    <ImageButton
+        android:id="@+id/flatIB"
+        android:layout_width="80dp"
+        android:layout_height="115dp"
+        android:layout_marginTop="64dp"
+        android:layout_marginEnd="44dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/eighthnoteIB"
+        app:srcCompat="@drawable/flataccidental" />
+
+    <TextView
+        android:id="@+id/BPMTV"
+        android:layout_width="wrap_content"
+        android:layout_height="45dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/BPMTV"
+        android:textColor="@color/black"
+
+        android:textSize="25dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sharpIB" />
+
+    <EditText
+        android:id="@+id/BPMET"
+        android:layout_width="150dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/BPMET"
+        android:textColor="@color/black"
+        android:textSize="25dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/BPMTV"
+        app:layout_constraintTop_toBottomOf="@+id/sharpIB" />
+
+    <TextView
+        android:id="@+id/beatspermeasureTV"
+        android:layout_width="wrap_content"
+        android:layout_height="45dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/beatspermeasureTV"
+        android:textColor="@color/black"
+        android:textSize="25dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/BPMTV" />
+    <EditText
+        android:id="@+id/beatspermeasureET"
+        android:layout_width="150dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/beatspermeasureET"
+        android:textColor="@color/black"
+        android:textSize="25dp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/beatspermeasureTV"
+        app:layout_constraintTop_toBottomOf="@+id/BPMET" />
+
+    <Button
+        android:id="@+id/playBT"
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="28dp"
+        android:text="@string/playBT"
+
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/notesrestsBT"
+        app:layout_constraintTop_toBottomOf="@+id/staffIV" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
