@@ -227,9 +227,9 @@
     <ImageView
         android:id="@+id/noteoneIV"
         android:layout_width="26dp"
-        android:layout_height="10dp"
-        android:layout_marginStart="65dp"
-        android:layout_marginTop="51dp"
+        android:layout_height="37dp"
+        android:layout_marginStart="68dp"
+        android:layout_marginTop="24dp"
         app:layout_constraintStart_toStartOf="@+id/staffIV"
         app:layout_constraintTop_toTopOf="@+id/staffIV"
         app:srcCompat="@drawable/wholenotesmall" />
@@ -238,20 +238,22 @@
         android:id="@+id/downarrowIB"
         android:layout_width="26dp"
         android:layout_height="23dp"
-        android:layout_marginStart="65dp"
+        android:layout_marginStart="68dp"
         app:layout_constraintStart_toStartOf="@+id/staffIV"
         app:layout_constraintTop_toBottomOf="@+id/noteoneIV"
-        app:srcCompat="@drawable/downarrowsmall" />
+        app:srcCompat="@drawable/downarrowsmall"
+        android:background="@android:color/transparent"/>
 
     <ImageButton
         android:id="@+id/uparrowIB"
         android:layout_width="26dp"
         android:layout_height="23dp"
-        android:layout_marginStart="64dp"
+        android:layout_marginStart="68dp"
         android:rotation="180"
         app:layout_constraintBottom_toTopOf="@+id/noteoneIV"
         app:layout_constraintStart_toStartOf="@+id/staffIV"
-        app:srcCompat="@drawable/downarrowsmall" />
+        app:srcCompat="@drawable/downarrowsmall"
+        android:background="@android:color/transparent"/>
 
     <ImageView
         android:id="@+id/notetwoIV"
@@ -266,9 +268,9 @@
     <ImageView
         android:id="@+id/notethreeIV"
         android:layout_width="26dp"
-        android:layout_height="10dp"
+        android:layout_height="37dp"
         android:layout_marginStart="185dp"
-        android:layout_marginTop="51dp"
+        android:layout_marginTop="24dp"
         app:layout_constraintStart_toStartOf="@+id/staffIV"
         app:layout_constraintTop_toTopOf="@+id/staffIV"
         app:srcCompat="@drawable/wholenotesmall" />
@@ -276,9 +278,9 @@
     <ImageView
         android:id="@+id/notefourIV"
         android:layout_width="26dp"
-        android:layout_height="10dp"
+        android:layout_height="37dp"
         android:layout_marginStart="245dp"
-        android:layout_marginTop="51dp"
+        android:layout_marginTop="24dp"
         app:layout_constraintStart_toStartOf="@+id/staffIV"
         app:layout_constraintTop_toTopOf="@+id/staffIV"
         app:srcCompat="@drawable/wholenotesmall" />
