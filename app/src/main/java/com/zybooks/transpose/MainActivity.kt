@@ -1,5 +1,6 @@
 package com.zybooks.transpose
 
+import Note
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -7,6 +8,7 @@ import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
 import androidx.core.graphics.drawable.toDrawable
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -81,13 +83,53 @@ class MainActivity : AppCompatActivity() {
             notePlace = determineIV()
         }
     }
-    fun createNote(currentIV : ImageView?, currentImage : Int) {
+    fun createNote(currentIV: ImageView?, currentImage: Int) {
         noteCounter++
-        if(currentIV != null) {
-            currentIV.setImageDrawable(currentImage.toDrawable())
-            currentIV.visibility = View.VISIBLE
+        currentIV?.let {
+            it.setImageResource(currentImage)
+            it.visibility = View.VISIBLE
         }
-
-
     }
+
+    enum class KeySignature(val number: Int) {
+
+        /*
+        Legend
+        M = major
+        m = minor
+        s = sharp
+        b = flat
+        sharps order = FCGDAEB
+        flats order = BEADGCF
+         */
+
+        //No accidentals
+        CM_am(0),
+
+        //Sharps
+        GM_em(7), //1 sharp
+        DM_bm(2), //2 sharps
+        AM_fsm(9), //3 sharps
+        EM_csm(4), //4 sharps
+        BM_gsm(11), //5 sharps
+        FsM_dsm(5), //6 sharps
+        CsM(1), //7 sharps
+
+        //Flats
+        FM_dm(5), //1 flat
+        BbM_gm(10), //2 flats
+        EbM_cm(3), //3 flats
+        AbM_fm(8), //4 flats
+        DbM_bbm(1), //5 flats
+        GbM_ebm(6), //6 flats
+        CbM(11) //7 flats
+    }
+
+    fun transpose(note: Note, fromKey: KeySignature, toKey: KeySignature){
+        var difference : Int = toKey.number - fromKey.number;
+        note.positionOnScale = note.positionOnScale - difference
+    }
+
+
+
 }
