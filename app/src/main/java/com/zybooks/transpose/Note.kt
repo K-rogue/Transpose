@@ -2,20 +2,16 @@ import android.content.Context
 import android.media.SoundPool
 import android.media.AudioAttributes
 
-data class Note(
-    var noteType: String,
-    var positionOnScale: Int
-) {
+data class Note(var noteType: String, var positionOnScale: Int) {
     private val soundPool: SoundPool
     private var soundId: Int? = null
-    var noteName: String = calculateNoteName()
-        private set
-    var duration: Double = calculateDuration()
-        private set
-    var octave: Int = calculateOctave()
-        private set
+    private var noteName : String
+    private var duration : Double
 
     init {
+        noteName = calculateNoteName()
+        duration = calculateDuration()
+
         val audioAttributes = AudioAttributes.Builder()
             .setUsage(AudioAttributes.USAGE_GAME)
             .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
@@ -27,14 +23,11 @@ data class Note(
             .build()
     }
 
-    private fun calculateNoteName(): String {
+    fun calculateNoteName(): String {
         val noteNames = listOf("c","db", "d","eb","e","f","gb","g","ab","a","bb","b")
-        return noteNames[(positionOnScale - 1) % 12]
-    }
-
-    private fun calculateOctave(): Int {
-        val noteNames = listOf("c","db", "d","eb","e","f","gb","g","ab","a","bb","b")
-        return (positionOnScale - 1) / 12
+        val oct = ((positionOnScale - 1) / 12) + 2
+        val letter = noteNames[(positionOnScale - 1) % 12]
+        return "$letter$oct"
     }
 
     private fun calculateDuration(): Double {
@@ -48,9 +41,31 @@ data class Note(
         return noteDurations[noteType] ?: 0.0
     }
 
+    fun retreiveNoteType(): String {
+        return noteType
+    }
+
+    fun forceNoteType(noteType: String) {
+        this.noteType = noteType
+        duration = calculateDuration()
+    }
+
+    fun retrievePositionOnScale(): Int {
+        return positionOnScale
+    }
+
+    fun getNoteName(): String {
+        return noteName
+    }
+
+    fun forcePositionOnScale(positionOnScale: Int) {
+        this.positionOnScale = positionOnScale
+        noteName = calculateNoteName()
+    }
+
     fun loadSound(context: Context) {
         val resourceId = context.resources.getIdentifier(
-            "$positionOnScale$octave", "raw", context.packageName
+            "$noteName", "raw", context.packageName
         )
         soundId = soundPool.load(context, resourceId, 1)
     }
