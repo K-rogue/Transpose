@@ -7,7 +7,6 @@
     tools:context=".MainActivity">
 
 
-
     <TextView
         android:id="@+id/notesTV"
         android:layout_width="wrap_content"
@@ -19,7 +18,7 @@
         android:textSize="25dp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cmBT" />
+        app:layout_constraintTop_toBottomOf="@+id/keyTV" />
 
     <ImageView
         android:id="@+id/staffIV"
@@ -29,15 +28,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/staff" />
-
-    <Button
-        android:id="@+id/cmBT"
-        android:layout_width="97dp"
-        android:layout_height="35dp"
-        android:layout_marginStart="8dp"
-        android:text="@string/cmbutton"
-        app:layout_constraintStart_toEndOf="@+id/keyTV"
-        app:layout_constraintTop_toBottomOf="@+id/staffIV" />
 
     <TextView
         android:id="@+id/keyTV"
@@ -56,11 +46,11 @@
         android:layout_width="65dp"
         android:layout_height="130dp"
         android:layout_marginStart="11dp"
-        android:layout_marginTop="68dp"
+        android:layout_marginTop="17dp"
         android:layout_marginEnd="16dp"
         app:layout_constraintEnd_toStartOf="@+id/halfnoteIB"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cmBT"
+        app:layout_constraintTop_toBottomOf="@+id/notesTV"
         app:srcCompat="@drawable/wholenote" />
 
     <ImageButton
@@ -68,9 +58,9 @@
         android:layout_width="65dp"
         android:layout_height="130dp"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="68dp"
+        android:layout_marginTop="17dp"
         app:layout_constraintStart_toEndOf="@+id/wholenoteIB"
-        app:layout_constraintTop_toBottomOf="@+id/cmBT"
+        app:layout_constraintTop_toBottomOf="@+id/notesTV"
         app:srcCompat="@drawable/halfnote" />
 
     <ImageButton
@@ -112,7 +102,7 @@
         android:layout_marginTop="16dp"
         android:text="@string/notesrestsBT"
         app:layout_constraintStart_toEndOf="@+id/notesTV"
-        app:layout_constraintTop_toBottomOf="@+id/cmBT" />
+        app:layout_constraintTop_toBottomOf="@+id/keyTV" />
 
     <TextView
         android:id="@+id/accidentalsTV"
@@ -285,6 +275,14 @@
         app:layout_constraintTop_toTopOf="@+id/staffIV"
         app:srcCompat="@drawable/wholenotesmall" />
 
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="224dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="1dp"
+        app:layout_constraintStart_toEndOf="@+id/keyTV"
+        app:layout_constraintTop_toBottomOf="@+id/staffIV"
+        android:entries ="@array/spinnerItems"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

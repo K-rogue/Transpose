@@ -10,4 +10,18 @@
     <string name="beatspermeasureTV">Beats Per Measure:</string>
     <string name="beatspermeasureET">4</string>
     <string name ="playBT">PLAY</string>
+    <string-array name="spinnerItems">
+        <item>CM/am</item>
+        <item>GM/em</item>
+        <item>DM/bm</item>
+        <item>AM/fsm</item>
+        <item>EM/csm</item>
+        <item>BM/gsm</item>
+        <item>FsM/dsm</item>
+        <item>DbM/bbm</item>
+        <item>AbM/fm</item>
+        <item>EbM/cm</item>
+        <item>BbM/gm</item>
+        <item>FM/dm</item>
+    </string-array>
 </resources>

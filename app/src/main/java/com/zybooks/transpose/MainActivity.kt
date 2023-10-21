@@ -13,6 +13,7 @@ import androidx.constraintlayout.widget.Constraints
 import androidx.core.view.marginTop
 import java.security.AccessController.getContext
 import android.content.res.Resources
+import java.util.Vector
 
 fun Int.toDp(): Int = (this / Resources.getSystem().displayMetrics.density).toInt()
 class MainActivity : AppCompatActivity() {
@@ -20,7 +21,8 @@ class MainActivity : AppCompatActivity() {
     //decleration of variables
     var noteCounter : Int = 0 //note counter is used to determine which image view to place the next note in - - should be replaced with vector.size once vector of objects is created
     lateinit var notePlace : ImageView //notePlace will be used as a variable to hold the place of the next note to be placed on the scale
-
+    lateinit var muse : Vector<Note>
+    var pages : Int = 1
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,7 +39,9 @@ class MainActivity : AppCompatActivity() {
         val notefourIV : ImageView = findViewById<ImageView>(R.id.notefourIV)
         val uparrowIB : ImageButton = findViewById<ImageButton>(R.id.uparrowIB)
         val downarrowIB : ImageButton = findViewById<ImageButton>(R.id.downarrowIB)
+        val notesrestsBT : Button = findViewById<Button>(R.id.notesrestsBT)
 
+        var notes : Boolean = true
         //function determineIV uses class's note counter to return a place for the next note to be
         fun determineIV() : ImageView {
             when(noteCounter% 4){
@@ -63,23 +67,48 @@ class MainActivity : AppCompatActivity() {
         //creation of on click listeners
         wholenoteIB.setOnClickListener{
             notePlace = determineIV()
-            createNote(notePlace,R.drawable.wholenotesmall,uparrowIB,downarrowIB)
+            if(notes) {
+                createNote(notePlace, R.drawable.wholenotesmall, uparrowIB, downarrowIB, notes)
+            }
+            else{
+                createNote(notePlace, R.drawable.wholerestsmall, uparrowIB, downarrowIB, notes)
+            }
         }
         halfnoteIB.setOnClickListener{
             notePlace = determineIV()
-            createNote(notePlace,R.drawable.halfnotesmall,uparrowIB,downarrowIB)
+            if(notes) {
+                createNote(notePlace, R.drawable.halfnotesmall, uparrowIB, downarrowIB, notes)
+            }
+            else{
+                createNote(notePlace, R.drawable.halfrestsmall, uparrowIB, downarrowIB, notes)
+            }
         }
-        quarternoteIB.setOnClickListener{
+        quarternoteIB.setOnClickListener {
             notePlace = determineIV()
-            createNote(notePlace,R.drawable.quarternotesmall,uparrowIB,downarrowIB)
+            if (notes) {
+                createNote(notePlace, R.drawable.quarternotesmall, uparrowIB, downarrowIB, notes)
+            }
+            else{
+                createNote(notePlace, R.drawable.quarterrestsmall, uparrowIB, downarrowIB, notes)
+            }
         }
         eighthnoteIB.setOnClickListener{
             notePlace = determineIV()
-            createNote(notePlace,R.drawable.eighthnotesmall,uparrowIB,downarrowIB)
+            if(notes) {
+                createNote(notePlace, R.drawable.eighthnotesmall, uparrowIB, downarrowIB, notes)
+            }
+            else{
+                createNote(notePlace, R.drawable.eighthrestsmall, uparrowIB, downarrowIB, notes)
+            }
         }
         sixteenthnoteIB.setOnClickListener{
             notePlace = determineIV()
-            createNote(notePlace,R.drawable.sixteenthnotesmall,uparrowIB,downarrowIB)
+            if(notes) {
+                createNote(notePlace,R.drawable.sixteenthnotesmall,uparrowIB,downarrowIB, notes)
+            }
+            else{
+                createNote(notePlace, R.drawable.sixteenthrestsmall, uparrowIB, downarrowIB, notes)
+            }
         }
         uparrowIB.setOnClickListener{
             moveNote(notePlace,R.drawable.uparrowsmall,uparrowIB,downarrowIB)
@@ -87,22 +116,41 @@ class MainActivity : AppCompatActivity() {
         downarrowIB.setOnClickListener{
             moveNote(notePlace,R.drawable.downarrowsmall,uparrowIB,downarrowIB)
         }
+        notesrestsBT.setOnClickListener{
+            if(notes){
+                wholenoteIB.setImageResource(R.drawable.wholerestsmall)
+                halfnoteIB.setImageResource(R.drawable.halfrestsmall)
+                quarternoteIB.setImageResource(R.drawable.quarterrestsmall)
+                eighthnoteIB.setImageResource(R.drawable.eighthrestsmall)
+                sixteenthnoteIB.setImageResource(R.drawable.sixteenthrestsmall)
+                notes = false
+            }
+            else{
+                wholenoteIB.setImageResource(R.drawable.wholenote)
+                halfnoteIB.setImageResource(R.drawable.halfnote)
+                quarternoteIB.setImageResource(R.drawable.quarternote)
+                eighthnoteIB.setImageResource(R.drawable.eighthnote)
+                sixteenthnoteIB.setImageResource(R.drawable.sixteenthnote)
+                notes = true
+            }
+        }
     }
 
-    fun createNote(currentIV : ImageView, currentImage : Int, uparrow : ImageButton, downarrow : ImageButton) {
+    fun createNote(currentIV : ImageView, currentImage : Int, uparrow : ImageButton, downarrow : ImageButton, notes : Boolean) {
         noteCounter++
         currentIV?.let {
             it.setImageResource(currentImage)
             it.visibility = View.VISIBLE
-            uparrow.y = currentIV.y - 100
+            uparrow.y = currentIV.y - 55
             downarrow.y = currentIV.y + 100
             uparrow.x = currentIV.x
             downarrow.x = currentIV.x
             if (currentImage == R.drawable.wholenotesmall) {
-                uparrow.bottom = (uparrow.bottom + 70)
+                uparrow.y = (uparrow.y + 60)
                 currentIV.scaleX = .5.toFloat()
                 currentIV.scaleY = .5.toFloat()
-                currentIV.y = (currentIV.y + 35)
+                currentIV.y = currentIV.y + 35
+
             } else {
                 currentIV.scaleX = 1.toFloat()
                 currentIV.scaleY = 1.toFloat()
@@ -110,8 +158,14 @@ class MainActivity : AppCompatActivity() {
             currentIV.let {
                 currentIV.setImageResource(currentImage)
                 currentIV.visibility = View.VISIBLE
-                uparrow.visibility = View.VISIBLE
-                downarrow.visibility = View.VISIBLE
+                if(notes) {
+                    uparrow.visibility = View.VISIBLE
+                    downarrow.visibility = View.VISIBLE
+                }
+                else{
+                    uparrow.visibility = View.INVISIBLE
+                    downarrow.visibility = View.INVISIBLE
+                }
             }
         }
     }
