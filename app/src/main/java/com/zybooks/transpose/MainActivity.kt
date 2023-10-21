@@ -42,6 +42,8 @@ class MainActivity : AppCompatActivity() {
         val notesrestsBT : Button = findViewById<Button>(R.id.notesrestsBT)
 
         var notes : Boolean = true
+
+
         //function determineIV uses class's note counter to return a place for the next note to be
         fun determineIV() : ImageView {
             when(noteCounter% 4){
