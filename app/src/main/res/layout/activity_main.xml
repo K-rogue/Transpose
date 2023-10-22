@@ -154,7 +154,7 @@
         android:layout_width="wrap_content"
         android:layout_height="45dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="28dp"
         android:text="@string/BPMTV"
         android:textColor="@color/black"
 
@@ -167,39 +167,14 @@
         android:id="@+id/BPMET"
         android:layout_width="150dp"
         android:layout_height="45dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="28dp"
         android:text="@string/BPMET"
         android:textColor="@color/black"
         android:textSize="25dp"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/BPMTV"
         app:layout_constraintTop_toBottomOf="@+id/sharpIB" />
-
-    <TextView
-        android:id="@+id/beatspermeasureTV"
-        android:layout_width="wrap_content"
-        android:layout_height="45dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="@string/beatspermeasureTV"
-        android:textColor="@color/black"
-        android:textSize="25dp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/BPMTV" />
-    <EditText
-        android:id="@+id/beatspermeasureET"
-        android:layout_width="150dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="@string/beatspermeasureET"
-        android:textColor="@color/black"
-        android:textSize="25dp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@+id/beatspermeasureTV"
-        app:layout_constraintTop_toBottomOf="@+id/BPMET" />
 
     <Button
         android:id="@+id/playBT"
@@ -218,7 +193,7 @@
         android:id="@+id/noteoneIV"
         android:layout_width="26dp"
         android:layout_height="37dp"
-        android:layout_marginStart="68dp"
+        android:layout_marginStart="125dp"
         android:layout_marginTop="24dp"
         app:layout_constraintStart_toStartOf="@+id/staffIV"
         app:layout_constraintTop_toTopOf="@+id/staffIV"
@@ -228,28 +203,28 @@
         android:id="@+id/downarrowIB"
         android:layout_width="26dp"
         android:layout_height="23dp"
-        android:layout_marginStart="68dp"
+        android:layout_marginStart="125dp"
+        android:background="@android:color/transparent"
         app:layout_constraintStart_toStartOf="@+id/staffIV"
         app:layout_constraintTop_toBottomOf="@+id/noteoneIV"
-        app:srcCompat="@drawable/downarrowsmall"
-        android:background="@android:color/transparent"/>
+        app:srcCompat="@drawable/downarrowsmall" />
 
     <ImageButton
         android:id="@+id/uparrowIB"
         android:layout_width="26dp"
         android:layout_height="23dp"
-        android:layout_marginStart="68dp"
+        android:layout_marginStart="125dp"
+        android:background="@android:color/transparent"
         android:rotation="180"
         app:layout_constraintBottom_toTopOf="@+id/noteoneIV"
         app:layout_constraintStart_toStartOf="@+id/staffIV"
-        app:srcCompat="@drawable/downarrowsmall"
-        android:background="@android:color/transparent"/>
+        app:srcCompat="@drawable/downarrowsmall" />
 
     <ImageView
         android:id="@+id/notetwoIV"
         android:layout_width="26dp"
         android:layout_height="37dp"
-        android:layout_marginStart="124dp"
+        android:layout_marginStart="185dp"
         android:layout_marginTop="24dp"
         app:layout_constraintStart_toStartOf="@+id/staffIV"
         app:layout_constraintTop_toTopOf="@+id/staffIV"
@@ -259,7 +234,7 @@
         android:id="@+id/notethreeIV"
         android:layout_width="26dp"
         android:layout_height="37dp"
-        android:layout_marginStart="185dp"
+        android:layout_marginStart="245dp"
         android:layout_marginTop="24dp"
         app:layout_constraintStart_toStartOf="@+id/staffIV"
         app:layout_constraintTop_toTopOf="@+id/staffIV"
@@ -269,7 +244,7 @@
         android:id="@+id/notefourIV"
         android:layout_width="26dp"
         android:layout_height="37dp"
-        android:layout_marginStart="245dp"
+        android:layout_marginStart="305dp"
         android:layout_marginTop="24dp"
         app:layout_constraintStart_toStartOf="@+id/staffIV"
         app:layout_constraintTop_toTopOf="@+id/staffIV"

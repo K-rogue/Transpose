@@ -21,8 +21,7 @@ class MainActivity : AppCompatActivity() {
     //decleration of variables
     var noteCounter : Int = 0 //note counter is used to determine which image view to place the next note in - - should be replaced with vector.size once vector of objects is created
     lateinit var notePlace : ImageView //notePlace will be used as a variable to hold the place of the next note to be placed on the scale
-    lateinit var muse : Vector<Note>
-    var pages : Int = 1
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +41,9 @@ class MainActivity : AppCompatActivity() {
         val notesrestsBT : Button = findViewById<Button>(R.id.notesrestsBT)
 
         var notes : Boolean = true
+        var tempNote = Note("whole", 3)
+        var muse : Vector<Note>
+        var pages : Int = 1
 
 
         //function determineIV uses class's note counter to return a place for the next note to be
@@ -70,47 +72,51 @@ class MainActivity : AppCompatActivity() {
         wholenoteIB.setOnClickListener{
             notePlace = determineIV()
             if(notes) {
-                createNote(notePlace, R.drawable.wholenotesmall, uparrowIB, downarrowIB, notes)
+                tempNote = createNote(notePlace, R.drawable.wholenotesmall, uparrowIB, downarrowIB, notes)
             }
             else{
-                createNote(notePlace, R.drawable.wholerestsmall, uparrowIB, downarrowIB, notes)
+                tempNote = createNote(notePlace, R.drawable.wholerestsmall, uparrowIB, downarrowIB, notes)
             }
         }
         halfnoteIB.setOnClickListener{
             notePlace = determineIV()
             if(notes) {
-                createNote(notePlace, R.drawable.halfnotesmall, uparrowIB, downarrowIB, notes)
+                tempNote = createNote(notePlace, R.drawable.halfnotesmall, uparrowIB, downarrowIB, notes)
             }
             else{
-                createNote(notePlace, R.drawable.halfrestsmall, uparrowIB, downarrowIB, notes)
+                tempNote = createNote(notePlace, R.drawable.halfrestsmall, uparrowIB, downarrowIB, notes)
             }
+
         }
         quarternoteIB.setOnClickListener {
             notePlace = determineIV()
             if (notes) {
-                createNote(notePlace, R.drawable.quarternotesmall, uparrowIB, downarrowIB, notes)
+                tempNote = createNote(notePlace, R.drawable.quarternotesmall, uparrowIB, downarrowIB, notes)
             }
             else{
-                createNote(notePlace, R.drawable.quarterrestsmall, uparrowIB, downarrowIB, notes)
+                tempNote = createNote(notePlace, R.drawable.quarterrestsmall, uparrowIB, downarrowIB, notes)
             }
+
         }
         eighthnoteIB.setOnClickListener{
             notePlace = determineIV()
             if(notes) {
-                createNote(notePlace, R.drawable.eighthnotesmall, uparrowIB, downarrowIB, notes)
+                tempNote = createNote(notePlace, R.drawable.eighthnotesmall, uparrowIB, downarrowIB, notes)
             }
             else{
-                createNote(notePlace, R.drawable.eighthrestsmall, uparrowIB, downarrowIB, notes)
+                tempNote = createNote(notePlace, R.drawable.eighthrestsmall, uparrowIB, downarrowIB, notes)
             }
+
         }
         sixteenthnoteIB.setOnClickListener{
             notePlace = determineIV()
             if(notes) {
-                createNote(notePlace,R.drawable.sixteenthnotesmall,uparrowIB,downarrowIB, notes)
+                tempNote = createNote(notePlace,R.drawable.sixteenthnotesmall,uparrowIB,downarrowIB, notes)
             }
             else{
-                createNote(notePlace, R.drawable.sixteenthrestsmall, uparrowIB, downarrowIB, notes)
+                tempNote = createNote(notePlace, R.drawable.sixteenthrestsmall, uparrowIB, downarrowIB, notes)
             }
+
         }
         uparrowIB.setOnClickListener{
             moveNote(notePlace,R.drawable.uparrowsmall,uparrowIB,downarrowIB)
@@ -138,8 +144,17 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun createNote(currentIV : ImageView, currentImage : Int, uparrow : ImageButton, downarrow : ImageButton, notes : Boolean) {
+    fun createNote(currentIV : ImageView, currentImage : Int, uparrow : ImageButton, downarrow : ImageButton, notes : Boolean) : Note {
         noteCounter++
+        var tempNote = Note("whole", 15)
+        when(currentImage){
+            R.drawable.wholenotesmall -> tempNote.noteType = "whole"
+            R.drawable.halfnotesmall -> tempNote.noteType = "half"
+            R.drawable.quarternotesmall -> tempNote.noteType = "quarter"
+            R.drawable.eighthnotesmall -> tempNote.noteType = "eighth"
+            R.drawable.sixteenthnotesmall -> tempNote.noteType = "sixteenth"
+            else -> "whole"
+        }
         currentIV?.let {
             it.setImageResource(currentImage)
             it.visibility = View.VISIBLE
@@ -170,6 +185,7 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+        return tempNote
     }
 
     enum class KeySignature(val number: Int, val accidents: Array<Int>, var sORb : Char) {
