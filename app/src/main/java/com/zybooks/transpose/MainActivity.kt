@@ -42,9 +42,9 @@ class MainActivity : AppCompatActivity() {
 
         var notes : Boolean = true
         var tempNote = Note("whole", 3)
-        var muse : Vector<Note>
-        var pages : Int = 1
-
+        var muse = Vector<Note>()
+        muse.ensureCapacity(100)
+        var currentPage : Int = 0
 
         //function determineIV uses class's note counter to return a place for the next note to be
         fun determineIV() : ImageView {
@@ -77,6 +77,7 @@ class MainActivity : AppCompatActivity() {
             else{
                 tempNote = createNote(notePlace, R.drawable.wholerestsmall, uparrowIB, downarrowIB, notes)
             }
+            muse.addElement(tempNote)
         }
         halfnoteIB.setOnClickListener{
             notePlace = determineIV()
@@ -86,7 +87,7 @@ class MainActivity : AppCompatActivity() {
             else{
                 tempNote = createNote(notePlace, R.drawable.halfrestsmall, uparrowIB, downarrowIB, notes)
             }
-
+            muse.addElement(tempNote)
         }
         quarternoteIB.setOnClickListener {
             notePlace = determineIV()
@@ -96,7 +97,7 @@ class MainActivity : AppCompatActivity() {
             else{
                 tempNote = createNote(notePlace, R.drawable.quarterrestsmall, uparrowIB, downarrowIB, notes)
             }
-
+            muse.addElement(tempNote)
         }
         eighthnoteIB.setOnClickListener{
             notePlace = determineIV()
@@ -106,7 +107,7 @@ class MainActivity : AppCompatActivity() {
             else{
                 tempNote = createNote(notePlace, R.drawable.eighthrestsmall, uparrowIB, downarrowIB, notes)
             }
-
+            muse.addElement(tempNote)
         }
         sixteenthnoteIB.setOnClickListener{
             notePlace = determineIV()
@@ -116,13 +117,32 @@ class MainActivity : AppCompatActivity() {
             else{
                 tempNote = createNote(notePlace, R.drawable.sixteenthrestsmall, uparrowIB, downarrowIB, notes)
             }
-
+            muse.addElement(tempNote)
         }
         uparrowIB.setOnClickListener{
-            moveNote(notePlace,R.drawable.uparrowsmall,uparrowIB,downarrowIB)
+            if(muse[((currentPage * 4) + (noteCounter % 4) - 1)].positionOnScale == 10 && !muse[((currentPage * 4) + (noteCounter % 4) - 1)].topStaff) {
+                for(i in 1..12)
+                moveNote(notePlace, R.drawable.uparrowsmall, uparrowIB, downarrowIB)
+                muse[((currentPage * 4) + (noteCounter % 4) - 1)].positionOnScale++
+                muse[((currentPage * 4) + (noteCounter % 4) - 1)].topStaff = true
+            }
+            else if(muse[((currentPage * 4) + (noteCounter % 4) - 1)].positionOnScale in 0..19) {
+                moveNote(notePlace, R.drawable.uparrowsmall, uparrowIB, downarrowIB)
+                muse[((currentPage * 4) + (noteCounter % 4) - 1)].positionOnScale++
+            }
+
         }
         downarrowIB.setOnClickListener{
-            moveNote(notePlace,R.drawable.downarrowsmall,uparrowIB,downarrowIB)
+            if(muse[((currentPage * 4) + (noteCounter % 4) - 1)].positionOnScale == 10 && muse[((currentPage * 4) + (noteCounter % 4) - 1)].topStaff) {
+                for(i in 1..12)
+                    moveNote(notePlace,R.drawable.downarrowsmall,uparrowIB,downarrowIB)
+                muse[((currentPage * 4) + (noteCounter % 4) - 1)].positionOnScale--
+                muse[((currentPage * 4) + (noteCounter % 4) - 1)].topStaff = false
+            }
+            else if(muse[((currentPage * 4) + (noteCounter % 4) - 1)].positionOnScale in 1..20) {
+                moveNote(notePlace, R.drawable.downarrowsmall, uparrowIB, downarrowIB)
+                muse[((currentPage * 4) + (noteCounter % 4) - 1)].positionOnScale--
+            }
         }
         notesrestsBT.setOnClickListener{
             if(notes){
