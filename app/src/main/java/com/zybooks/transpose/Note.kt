@@ -9,12 +9,14 @@ data class Note(var noteType: String, var positionOnScale: Int) {
     private var noteName : String
     private var duration : Double
     private var isSoundLoaded: Boolean = false
-    var accidental : String = "none"
+    private var realValue : Int = 0
+    var accidental : Char = ' '
     var topStaff : Boolean = true
 
     init {
         noteName = calculateNoteName()
         duration = calculateDuration()
+        forcePositionOnScale(positionOnScale, accidental)
 
         val audioAttributes = AudioAttributes.Builder()
             .setUsage(AudioAttributes.USAGE_GAME)
@@ -43,6 +45,7 @@ data class Note(var noteType: String, var positionOnScale: Int) {
         val noteNames = listOf("c","db", "d","eb","e","f","gb","g","ab","a","bb","b")
         val oct = ((positionOnScale) / 12) + 2
         val letter = noteNames[(positionOnScale) % 12]
+        noteName = "$letter$oct"
         return "$letter$oct"
     }
 
@@ -74,8 +77,25 @@ data class Note(var noteType: String, var positionOnScale: Int) {
         return noteName
     }
 
-    fun forcePositionOnScale(positionOnScale: Int) {
+    fun forcePositionOnScale(positionOnScale: Int, flag: Char) {
+        var temp: Int
+        //start with note in space below the last bass line (F2), last note is space above top treble line (G5)
+        //first val is scale position, second val is note position
+        var scaleToVal = arrayOf    (Pair(0, 5), Pair(1, 7), Pair(2, 9), Pair(3, 11), Pair(4, 12), Pair(5, 14),
+                                    Pair(6, 16), Pair(7, 17), Pair(8, 19), Pair(9, 21), Pair(10, 23), Pair(11, 24),
+                                    Pair(12, 26), Pair(13, 28), Pair(14, 29), Pair(15, 31), Pair(16, 33), Pair(17, 35),
+                                    Pair(18, 36), Pair(19, 38), Pair(20, 40), Pair(21, 41), Pair(22, 43))
+        temp = scaleToVal[positionOnScale].second
+        if (flag == 'b') {
+            temp--
+            accidental = 'b'
+        }
+        else if (flag == 's') {
+            temp++
+            accidental = 's'
+        }
         this.positionOnScale = positionOnScale
+        this.realValue = temp
         noteName = calculateNoteName()
     }
 

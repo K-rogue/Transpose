@@ -96,7 +96,7 @@ class MainActivity : AppCompatActivity() {
         //creation of on click listeners
         sharpIB.setOnClickListener{
             when(muse[((currentPage * 4) + ((noteCounter-1) % 4))].accidental) {
-                "none","natural","flat" ->{
+                ' ','n','b' ->{
                     when(muse[((currentPage * 4) + ((noteCounter-1) % 4))].noteType){
                         "whole"-> notePlace.setImageResource(R.drawable.wholenotesharp)
                         "half" -> notePlace.setImageResource(R.drawable.halfnotesharp)
@@ -104,9 +104,9 @@ class MainActivity : AppCompatActivity() {
                         "eighth" -> notePlace.setImageResource(R.drawable.eighthnotesharp)
                         "sixteenth"-> notePlace.setImageResource(R.drawable.sixteenthnotesharp)
                     }
-                    muse[((currentPage * 4) + ((noteCounter-1) % 4))].accidental = "sharp"
+                    muse[((currentPage * 4) + ((noteCounter-1) % 4))].accidental = 's'
                 }
-                "sharp"->{
+                's'->{
                     when(muse[((currentPage * 4) + ((noteCounter-1) % 4))].noteType){
                     "whole"-> notePlace.setImageResource(R.drawable.wholenotesmall)
                     "half" -> notePlace.setImageResource(R.drawable.halfnotesmall)
@@ -114,13 +114,13 @@ class MainActivity : AppCompatActivity() {
                     "eighth" -> notePlace.setImageResource(R.drawable.eighthnotesmall)
                     "sixteenth"-> notePlace.setImageResource(R.drawable.sixteenthnotesmall)
                 }
-                    muse[((currentPage * 4) + ((noteCounter-1) % 4))].accidental = "none"
+                    muse[((currentPage * 4) + ((noteCounter-1) % 4))].accidental = ' '
                 }
             }
         }
         natrualIB.setOnClickListener{
             when(muse[((currentPage * 4) + ((noteCounter-1) % 4))].accidental) {
-                "none","sharp","flat" ->{
+                ' ','s','b' ->{
                     when(muse[((currentPage * 4) + ((noteCounter-1) % 4))].noteType){
                         "whole"-> notePlace.setImageResource(R.drawable.wholenotenatural)
                         "half" -> notePlace.setImageResource(R.drawable.halfnotenatural)
@@ -128,9 +128,9 @@ class MainActivity : AppCompatActivity() {
                         "eighth" -> notePlace.setImageResource(R.drawable.eighthnotenatural)
                         "sixteenth"-> notePlace.setImageResource(R.drawable.sixteenthnotenatural)
                     }
-                    muse[((currentPage * 4) + ((noteCounter-1) % 4))].accidental = "natural"
+                    muse[((currentPage * 4) + ((noteCounter-1) % 4))].accidental = 'n'
                 }
-                "natural"->{
+                'n'->{
                     when(muse[((currentPage * 4) + ((noteCounter-1) % 4))].noteType){
                         "whole"-> notePlace.setImageResource(R.drawable.wholenotesmall)
                         "half" -> notePlace.setImageResource(R.drawable.halfnotesmall)
@@ -138,13 +138,13 @@ class MainActivity : AppCompatActivity() {
                         "eighth" -> notePlace.setImageResource(R.drawable.eighthnotesmall)
                         "sixteenth"-> notePlace.setImageResource(R.drawable.sixteenthnotesmall)
                     }
-                    muse[((currentPage * 4) + ((noteCounter-1) % 4))].accidental = "none"
+                    muse[((currentPage * 4) + ((noteCounter-1) % 4))].accidental = ' '
                 }
             }
         }
         flatIB.setOnClickListener{
             when(muse[((currentPage * 4) + ((noteCounter-1) % 4))].accidental) {
-                "none","natural","sharp" ->{
+                ' ','n','s' ->{
                     when(muse[((currentPage * 4) + ((noteCounter-1) % 4))].noteType){
                         "whole"-> notePlace.setImageResource(R.drawable.wholenoteflat)
                         "half" -> notePlace.setImageResource(R.drawable.halfnoteflat)
@@ -152,9 +152,9 @@ class MainActivity : AppCompatActivity() {
                         "eighth" -> notePlace.setImageResource(R.drawable.eighthnoteflat)
                         "sixteenth"-> notePlace.setImageResource(R.drawable.sixteenthnoteflat)
                     }
-                    muse[((currentPage * 4) + ((noteCounter-1) % 4))].accidental = "flat"
+                    muse[((currentPage * 4) + ((noteCounter-1) % 4))].accidental = 'b'
                 }
-                "flat"->{
+                'b'->{
                     when(muse[((currentPage * 4) + ((noteCounter-1) % 4))].noteType){
                         "whole"-> notePlace.setImageResource(R.drawable.wholenotesmall)
                         "half" -> notePlace.setImageResource(R.drawable.halfnotesmall)
@@ -162,7 +162,7 @@ class MainActivity : AppCompatActivity() {
                         "eighth" -> notePlace.setImageResource(R.drawable.eighthnotesmall)
                         "sixteenth"-> notePlace.setImageResource(R.drawable.sixteenthnotesmall)
                     }
-                    muse[((currentPage * 4) + ((noteCounter-1) % 4))].accidental = "none"
+                    muse[((currentPage * 4) + ((noteCounter-1) % 4))].accidental = ' '
                 }
             }
         }
@@ -180,7 +180,7 @@ class MainActivity : AppCompatActivity() {
                 if(muse[((currentPage * 4) + ((noteCounter-1) % 4))].noteType == "whole") {// if the previous note was a whole note
                     fromWholeNote(notePlace,uparrowIB,downarrowIB) // fix the height display issues by using fromWholeNote function
                 }
-                muse[((currentPage * 4) + ((noteCounter- 1) % 4))] = tempNote//set the appropriate vector place to the temp note
+                muse[((currentPage * 4) + ((noteCounter - 1) % 4))] = tempNote//set the appropriate vector place to the temp note
             }
             else{// if the number of notes on the page plus the number of pages*4 notes per page is equal to the size of the vector, then a new note was created
                 muse.addElement(tempNote)// so add that new note to the vector
@@ -201,7 +201,7 @@ class MainActivity : AppCompatActivity() {
                 if(muse[((currentPage * 4) + ((noteCounter-1) % 4))].noteType == "whole") {
                     fromWholeNote(notePlace,uparrowIB,downarrowIB)
                 }
-                muse[((currentPage * 4) + ((noteCounter- 1) % 4))] = tempNote
+                muse[((currentPage * 4) + ((noteCounter - 1) % 4))] = tempNote
             }
             else{
                 muse.addElement(tempNote)
@@ -222,7 +222,7 @@ class MainActivity : AppCompatActivity() {
                 if(muse[((currentPage * 4) + ((noteCounter-1) % 4))].noteType == "whole") {
                     fromWholeNote(notePlace,uparrowIB,downarrowIB)
                 }
-                muse[((currentPage * 4) + ((noteCounter- 1) % 4))] = tempNote
+                muse[((currentPage * 4) + ((noteCounter - 1) % 4))] = tempNote
             }
             else{
                 muse.addElement(tempNote)
@@ -243,7 +243,7 @@ class MainActivity : AppCompatActivity() {
                 if(muse[((currentPage * 4) + ((noteCounter-1) % 4))].noteType == "whole") {
                     fromWholeNote(notePlace,uparrowIB,downarrowIB)
                 }
-                muse[((currentPage * 4) + ((noteCounter- 1) % 4))] = tempNote
+                muse[((currentPage * 4) + ((noteCounter - 1) % 4))] = tempNote
             }
             else{
                 muse.addElement(tempNote)
@@ -264,35 +264,17 @@ class MainActivity : AppCompatActivity() {
                 if(muse[((currentPage * 4) + ((noteCounter-1) % 4))].noteType == "whole") {
                     fromWholeNote(notePlace,uparrowIB,downarrowIB)
                 }
-                muse[((currentPage * 4) + ((noteCounter- 1) % 4))] = tempNote
+                muse[((currentPage * 4) + ((noteCounter - 1) % 4))] = tempNote
             }
             else{
                 muse.addElement(tempNote)
             }
         }
         uparrowIB.setOnClickListener{
-            if(muse[((currentPage * 4) + ((noteCounter - 1) % 4))].positionOnScale == 10 && !muse[((currentPage * 4) + ((noteCounter- 1) % 4))].topStaff) {//if the current note is on the bottom staff and the note position is 10(top of bottom staff)
-                for(i in 1..12)// jump to top staff
-                    moveNote(notePlace, R.drawable.uparrowsmall, uparrowIB, downarrowIB)
-                muse[((currentPage * 4) + ((noteCounter- 1) % 4))].positionOnScale++//adjust the position in the class
-                muse[((currentPage * 4) + ((noteCounter- 1) % 4))].topStaff = true//set the boolean of the note in the vector to be on the top staff
-            }
-            else if(muse[((currentPage * 4) + ((noteCounter- 1) % 4))].positionOnScale in 0..19) {//if not on the bottom staff, or not at the tenth position
-                moveNote(notePlace, R.drawable.uparrowsmall, uparrowIB, downarrowIB)//move note up one position
-                muse[((currentPage * 4) + ((noteCounter- 1) % 4))].positionOnScale++//adjust the position in the class
-            }
+            moveNote(muse[((currentPage * 4) + ((noteCounter - 1) % 4))], notePlace, R.drawable.uparrowsmall, uparrowIB, downarrowIB)
         }
-        downarrowIB.setOnClickListener{//same as up arrow but inversed top/bottom
-            if(muse[((currentPage * 4) + ((noteCounter- 1) % 4))].positionOnScale == 10 && muse[((currentPage * 4) + ((noteCounter- 1) % 4))].topStaff) {
-                for(i in 1..12)
-                    moveNote(notePlace,R.drawable.downarrowsmall,uparrowIB,downarrowIB)
-                muse[((currentPage * 4) + ((noteCounter- 1) % 4))].positionOnScale--
-                muse[((currentPage * 4) + ((noteCounter- 1) % 4))].topStaff = false
-            }
-            else if(muse[((currentPage * 4) + ((noteCounter- 1) % 4))].positionOnScale in 1..20) {
-                moveNote(notePlace, R.drawable.downarrowsmall, uparrowIB, downarrowIB)
-                muse[((currentPage * 4) + ((noteCounter- 1) % 4))].positionOnScale--
-            }
+        downarrowIB.setOnClickListener {//same as up arrow but inversed top/bottom
+            moveNote(muse[((currentPage * 4) + ((noteCounter - 1) % 4))], notePlace, R.drawable.downarrowsmall, uparrowIB, downarrowIB)
         }
         notesrestsBT.setOnClickListener{
             if(notes){//if notes are being displayed, display rests
@@ -318,7 +300,7 @@ class MainActivity : AppCompatActivity() {
     fun createNote(currentIV : ImageView, currentImage : Int, uparrow : ImageButton, downarrow : ImageButton, notes : Boolean) : Note {
         noteCounter++//increment note counter
 
-        var tempNote = Note("half", 15)//create note to be returned
+        var tempNote = Note("half", 17)//create note to be returned
         when(currentImage){//return string version of currentImage
             R.drawable.wholenotesmall -> tempNote.noteType = "whole"
             R.drawable.halfnotesmall -> tempNote.noteType = "half"
@@ -398,14 +380,14 @@ class MainActivity : AppCompatActivity() {
     fun transpose(note: Note, fromKey: KeySignature, toKey: KeySignature) : Pair<Int, Char> {
         var difference : Int = toKey.number - fromKey.number //Calculate real number of steps between two notes
         var (UIDifference, flag) = getUIDifference(note, fromKey, toKey) //Get visual number of steps and if it needs an accidental
-        note.forcePositionOnScale(note.positionOnScale - difference) //Update note
+        note.forcePositionOnScale(note.positionOnScale - difference, ' ') //Update note
         return Pair(UIDifference, flag) //Return pair of visual steps with accidental
     }
 
     fun getUIDifference(note: Note, fromKey: KeySignature, toKey: KeySignature ) : Pair<Int, Char> {
         var UIDifference : Int = 0 //Visual number of steps
         var difference : Int = toKey.number - fromKey.number //Real number of steps
-        var flag : Char = 'n' //n = no change. b = flat, s = sharp
+        var flag : Char = ' ' //n = no change. b = flat, s = sharp
         var availableNotes : Array<String> = arrayOf()
 
         //List of notes for all keys
@@ -473,26 +455,43 @@ class MainActivity : AppCompatActivity() {
         }
 
         if (toKey.accidents[secondNoteVal] != 0) //If the key signature holds a flat or sharp at this key, then remove the accidental
-            flag = 'n'
+            flag = ' '
 
         return Pair(UIDifference, flag)
 
     }
 
     //moves note on up or down arrow button press
-    fun moveNote(currentIV : ImageView,currentImage : Int, uparrow : ImageButton, downarrow : ImageButton){
+    fun moveNote(note: Note, currentIV : ImageView,currentImage : Int, uparrow : ImageButton, downarrow : ImageButton){
         if(currentImage == R.drawable.uparrowsmall)// if up arrow was pressed, move current image view and up and down arrows up
         {
-            uparrow.y = uparrow.y -14
-            downarrow.y=downarrow.y - 14
-            currentIV.y = currentIV.y - 14
+            if (note.positionOnScale == 10 && note.positionOnScale < 23) {
+                uparrow.y = uparrow.y - (12 * 14)
+                downarrow.y = downarrow.y - (12 * 14)
+                currentIV.y = currentIV.y - (12 * 14)
+                note.forcePositionOnScale(note.positionOnScale + 1, note.accidental)
+            }
+            else{
+                uparrow.y = uparrow.y - 14
+                downarrow.y = downarrow.y - 14
+                currentIV.y = currentIV.y - 14
+                note.forcePositionOnScale(note.positionOnScale + 1, note.accidental)
+            }
         }
         else{// if down arrow was pressed, move current image view, up arrow, and down arrow down
-            uparrow.y = uparrow.y +14
-            downarrow.y=downarrow.y + 14
-            currentIV.y = currentIV.y + 14
+            if (note.positionOnScale == 11 && note.positionOnScale > 0) {
+                uparrow.y = uparrow.y + (12 * 14)
+                downarrow.y = downarrow.y + (12 * 14)
+                currentIV.y = currentIV.y + (12 * 14)
+                note.forcePositionOnScale(note.positionOnScale - 1, note.accidental)
+            }
+            else{
+                uparrow.y = uparrow.y + 14
+                downarrow.y = downarrow.y + 14
+                currentIV.y = currentIV.y + 14
+                note.forcePositionOnScale(note.positionOnScale - 1, note.accidental)
+            }
         }
-
     }
 }
 
