@@ -77,7 +77,15 @@ class MainActivity : AppCompatActivity() {
             else{
                 tempNote = createNote(notePlace, R.drawable.wholerestsmall, uparrowIB, downarrowIB, notes)
             }
-            muse.addElement(tempNote)
+            if(muse.size > ((currentPage * 4) + ((noteCounter- 1) % 4))) {
+                if(muse[((currentPage * 4) + ((noteCounter-1) % 4))].noteType == "whole") {
+                    fromWholeNote(notePlace,uparrowIB,downarrowIB)
+                }
+                muse[((currentPage * 4) + ((noteCounter- 1) % 4))] = tempNote
+            }
+            else{
+                muse.addElement(tempNote)
+            }
         }
         halfnoteIB.setOnClickListener{
             notePlace = determineIV()
@@ -87,7 +95,15 @@ class MainActivity : AppCompatActivity() {
             else{
                 tempNote = createNote(notePlace, R.drawable.halfrestsmall, uparrowIB, downarrowIB, notes)
             }
-            muse.addElement(tempNote)
+            if(muse.size > ((currentPage * 4) + ((noteCounter- 1) % 4))) {
+                if(muse[((currentPage * 4) + ((noteCounter-1) % 4))].noteType == "whole") {
+                    fromWholeNote(notePlace,uparrowIB,downarrowIB)
+                }
+                muse[((currentPage * 4) + ((noteCounter- 1) % 4))] = tempNote
+            }
+            else{
+                muse.addElement(tempNote)
+            }
         }
         quarternoteIB.setOnClickListener {
             notePlace = determineIV()
@@ -97,7 +113,15 @@ class MainActivity : AppCompatActivity() {
             else{
                 tempNote = createNote(notePlace, R.drawable.quarterrestsmall, uparrowIB, downarrowIB, notes)
             }
-            muse.addElement(tempNote)
+            if(muse.size > ((currentPage * 4) + ((noteCounter- 1) % 4))) {
+                if(muse[((currentPage * 4) + ((noteCounter-1) % 4))].noteType == "whole") {
+                    fromWholeNote(notePlace,uparrowIB,downarrowIB)
+                }
+                muse[((currentPage * 4) + ((noteCounter- 1) % 4))] = tempNote
+            }
+            else{
+                muse.addElement(tempNote)
+            }
         }
         eighthnoteIB.setOnClickListener{
             notePlace = determineIV()
@@ -107,7 +131,15 @@ class MainActivity : AppCompatActivity() {
             else{
                 tempNote = createNote(notePlace, R.drawable.eighthrestsmall, uparrowIB, downarrowIB, notes)
             }
-            muse.addElement(tempNote)
+            if(muse.size > ((currentPage * 4) + ((noteCounter- 1) % 4))) {
+                if(muse[((currentPage * 4) + ((noteCounter-1) % 4))].noteType == "whole") {
+                    fromWholeNote(notePlace,uparrowIB,downarrowIB)
+                }
+                muse[((currentPage * 4) + ((noteCounter- 1) % 4))] = tempNote
+            }
+            else{
+                muse.addElement(tempNote)
+            }
         }
         sixteenthnoteIB.setOnClickListener{
             notePlace = determineIV()
@@ -117,31 +149,39 @@ class MainActivity : AppCompatActivity() {
             else{
                 tempNote = createNote(notePlace, R.drawable.sixteenthrestsmall, uparrowIB, downarrowIB, notes)
             }
-            muse.addElement(tempNote)
+            if(muse.size > ((currentPage * 4) + ((noteCounter- 1) % 4))) {
+                if(muse[((currentPage * 4) + ((noteCounter-1) % 4))].noteType == "whole") {
+                    fromWholeNote(notePlace,uparrowIB,downarrowIB)
+                }
+                muse[((currentPage * 4) + ((noteCounter- 1) % 4))] = tempNote
+            }
+            else{
+                muse.addElement(tempNote)
+            }
         }
         uparrowIB.setOnClickListener{
-            if(muse[((currentPage * 4) + (noteCounter % 4) - 1)].positionOnScale == 10 && !muse[((currentPage * 4) + (noteCounter % 4) - 1)].topStaff) {
+            if(muse[((currentPage * 4) + ((noteCounter - 1) % 4))].positionOnScale == 10 && !muse[((currentPage * 4) + ((noteCounter- 1) % 4))].topStaff) {
                 for(i in 1..12)
-                moveNote(notePlace, R.drawable.uparrowsmall, uparrowIB, downarrowIB)
-                muse[((currentPage * 4) + (noteCounter % 4) - 1)].positionOnScale++
-                muse[((currentPage * 4) + (noteCounter % 4) - 1)].topStaff = true
+                    moveNote(notePlace, R.drawable.uparrowsmall, uparrowIB, downarrowIB)
+                muse[((currentPage * 4) + ((noteCounter- 1) % 4))].forcePositionOnScale(muse[((currentPage * 4) + ((noteCounter- 1) % 4))].positionOnScale++)
+                muse[((currentPage * 4) + ((noteCounter- 1) % 4))].topStaff = true
             }
-            else if(muse[((currentPage * 4) + (noteCounter % 4) - 1)].positionOnScale in 0..19) {
+            else if(muse[((currentPage * 4) + ((noteCounter- 1) % 4))].positionOnScale in 0..19) {
                 moveNote(notePlace, R.drawable.uparrowsmall, uparrowIB, downarrowIB)
-                muse[((currentPage * 4) + (noteCounter % 4) - 1)].positionOnScale++
+                muse[((currentPage * 4) + ((noteCounter- 1) % 4))].forcePositionOnScale(muse[((currentPage * 4) + ((noteCounter- 1) % 4))].positionOnScale++)
             }
 
         }
         downarrowIB.setOnClickListener{
-            if(muse[((currentPage * 4) + (noteCounter % 4) - 1)].positionOnScale == 10 && muse[((currentPage * 4) + (noteCounter % 4) - 1)].topStaff) {
+            if(muse[((currentPage * 4) + ((noteCounter- 1) % 4))].positionOnScale == 10 && muse[((currentPage * 4) + ((noteCounter- 1) % 4))].topStaff) {
                 for(i in 1..12)
                     moveNote(notePlace,R.drawable.downarrowsmall,uparrowIB,downarrowIB)
-                muse[((currentPage * 4) + (noteCounter % 4) - 1)].positionOnScale--
-                muse[((currentPage * 4) + (noteCounter % 4) - 1)].topStaff = false
+                muse[((currentPage * 4) + ((noteCounter- 1) % 4))].forcePositionOnScale(muse[((currentPage * 4) + ((noteCounter- 1) % 4))].positionOnScale--)
+                muse[((currentPage * 4) + ((noteCounter- 1) % 4))].topStaff = false
             }
-            else if(muse[((currentPage * 4) + (noteCounter % 4) - 1)].positionOnScale in 1..20) {
+            else if(muse[((currentPage * 4) + ((noteCounter- 1) % 4))].positionOnScale in 1..20) {
                 moveNote(notePlace, R.drawable.downarrowsmall, uparrowIB, downarrowIB)
-                muse[((currentPage * 4) + (noteCounter % 4) - 1)].positionOnScale--
+                muse[((currentPage * 4) + ((noteCounter- 1) % 4))].forcePositionOnScale(muse[((currentPage * 4) + ((noteCounter- 1) % 4))].positionOnScale--)
             }
         }
         notesrestsBT.setOnClickListener{
@@ -176,23 +216,22 @@ class MainActivity : AppCompatActivity() {
             else -> "whole"
         }
         currentIV?.let {
+            if (currentImage == R.drawable.wholenotesmall) {
+                uparrow.y = (uparrow.y + 60)
+                currentIV.scaleX = .5.toFloat()
+                currentIV.scaleY = .5.toFloat()
+                currentIV.y = currentIV.y + 35
+            }
+            else {
+                currentIV.scaleX = 1.toFloat()
+                currentIV.scaleY = 1.toFloat()
+            }
             it.setImageResource(currentImage)
             it.visibility = View.VISIBLE
             uparrow.y = currentIV.y - 55
             downarrow.y = currentIV.y + 100
             uparrow.x = currentIV.x
             downarrow.x = currentIV.x
-            if (currentImage == R.drawable.wholenotesmall) {
-                uparrow.y = (uparrow.y + 60)
-                currentIV.scaleX = .5.toFloat()
-                currentIV.scaleY = .5.toFloat()
-                currentIV.y = currentIV.y + 35
-
-            } else {
-                currentIV.scaleX = 1.toFloat()
-                currentIV.scaleY = 1.toFloat()
-            }
-            currentIV.let {
                 currentIV.setImageResource(currentImage)
                 currentIV.visibility = View.VISIBLE
                 if(notes) {
@@ -203,7 +242,6 @@ class MainActivity : AppCompatActivity() {
                     uparrow.visibility = View.INVISIBLE
                     downarrow.visibility = View.INVISIBLE
                 }
-            }
         }
         return tempNote
     }
@@ -342,3 +380,8 @@ class MainActivity : AppCompatActivity() {
         }
     }
 }
+    fun fromWholeNote(currentIV : ImageView, uparrow : ImageButton, downarrow : ImageButton){
+        currentIV.y = currentIV.y-35
+        downarrow.y = downarrow.y-35
+        uparrow.y = uparrow.y-35
+    }
