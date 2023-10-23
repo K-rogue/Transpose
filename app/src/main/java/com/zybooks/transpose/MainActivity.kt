@@ -15,10 +15,9 @@ import java.security.AccessController.getContext
 import android.content.res.Resources
 import java.util.Vector
 
-fun Int.toDp(): Int = (this / Resources.getSystem().displayMetrics.density).toInt()
 class MainActivity : AppCompatActivity() {
 
-    //decleration of variables
+    //decleration of global variables variables
     var noteCounter : Int = 0 //note counter is used to determine which image view to place the next note in - - should be replaced with vector.size once vector of objects is created
     lateinit var notePlace : ImageView //notePlace will be used as a variable to hold the place of the next note to be placed on the scale
 
@@ -26,6 +25,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
         // declare vals for buttons and image views
         val wholenoteIB : ImageButton = findViewById<ImageButton>(R.id.wholenoteIB)
         val halfnoteIB : ImageButton = findViewById<ImageButton>(R.id.halfnoteIB)
@@ -40,11 +40,12 @@ class MainActivity : AppCompatActivity() {
         val downarrowIB : ImageButton = findViewById<ImageButton>(R.id.downarrowIB)
         val notesrestsBT : Button = findViewById<Button>(R.id.notesrestsBT)
 
-        var notes : Boolean = true
-        var tempNote = Note("whole", 3)
-        var muse = Vector<Note>()
-        muse.ensureCapacity(100)
-        var currentPage : Int = 0
+        // decleration of variables
+        var notes : Boolean = true // used to keep track of if notes or rests are being displayed
+        var tempNote = Note("whole", 3) // will be used as a note to edit before adding to vector of notes
+        var muse = Vector<Note>()// vector of notes that will be in charge of storing created music
+        muse.ensureCapacity(100) //sets default minimum capacity to 100(not sure if we need this... vectors in kotlin are weird
+        var currentPage : Int = 0//keeps track of what page you are on from left/right swipe features
 
         //function determineIV uses class's note counter to return a place for the next note to be
         fun determineIV() : ImageView {
@@ -68,26 +69,27 @@ class MainActivity : AppCompatActivity() {
         //disables invisible buttons so they cant accidentally be pressed
         uparrowIB.isActivated = false
         downarrowIB.isActivated = false
+
         //creation of on click listeners
         wholenoteIB.setOnClickListener{
-            notePlace = determineIV()
-            if(notes) {
-                tempNote = createNote(notePlace, R.drawable.wholenotesmall, uparrowIB, downarrowIB, notes)
+            notePlace = determineIV()// determines the place
+            if(notes) {//if motes are being displayed
+                tempNote = createNote(notePlace, R.drawable.wholenotesmall, uparrowIB, downarrowIB, notes) // set tempNote to the result of the createNote function
             }
-            else{
-                tempNote = createNote(notePlace, R.drawable.wholerestsmall, uparrowIB, downarrowIB, notes)
+            else{//if rests are being displayed
+                tempNote = createNote(notePlace, R.drawable.wholerestsmall, uparrowIB, downarrowIB, notes)// set tempNote to result of the createNote function
             }
-            if(muse.size > ((currentPage * 4) + ((noteCounter- 1) % 4))) {
-                if(muse[((currentPage * 4) + ((noteCounter-1) % 4))].noteType == "whole") {
-                    fromWholeNote(notePlace,uparrowIB,downarrowIB)
+            if(muse.size > ((currentPage * 4) + ((noteCounter- 1) % 4))) {//if the size of the vector(size equals 0 on first call as no note has been added yet) is larger than the number of pages(with 4 notes each) plus the number of notes on the current page, then a note was edited, not created
+                if(muse[((currentPage * 4) + ((noteCounter-1) % 4))].noteType == "whole") {// if the previous note was a whole note
+                    fromWholeNote(notePlace,uparrowIB,downarrowIB) // fix the height display issues by using fromWholeNote function
                 }
-                muse[((currentPage * 4) + ((noteCounter- 1) % 4))] = tempNote
+                muse[((currentPage * 4) + ((noteCounter- 1) % 4))] = tempNote//set the appropriate vector place to the temp note
             }
-            else{
-                muse.addElement(tempNote)
+            else{// if the number of notes on the page plus the number of pages*4 notes per page is equal to the size of the vector, then a new note was created
+                muse.addElement(tempNote)// so add that new note to the vector
             }
         }
-        halfnoteIB.setOnClickListener{
+        halfnoteIB.setOnClickListener{//same as wholeNoteIB but createNote is called with halfnote image
             notePlace = determineIV()
             if(notes) {
                 tempNote = createNote(notePlace, R.drawable.halfnotesmall, uparrowIB, downarrowIB, notes)
@@ -105,7 +107,7 @@ class MainActivity : AppCompatActivity() {
                 muse.addElement(tempNote)
             }
         }
-        quarternoteIB.setOnClickListener {
+        quarternoteIB.setOnClickListener {//same as wholeNoteIB but createNote is called with quarternote image
             notePlace = determineIV()
             if (notes) {
                 tempNote = createNote(notePlace, R.drawable.quarternotesmall, uparrowIB, downarrowIB, notes)
@@ -123,7 +125,7 @@ class MainActivity : AppCompatActivity() {
                 muse.addElement(tempNote)
             }
         }
-        eighthnoteIB.setOnClickListener{
+        eighthnoteIB.setOnClickListener{//same as wholeNoteIB but createNote is called with eighthNote image
             notePlace = determineIV()
             if(notes) {
                 tempNote = createNote(notePlace, R.drawable.eighthnotesmall, uparrowIB, downarrowIB, notes)
@@ -141,7 +143,7 @@ class MainActivity : AppCompatActivity() {
                 muse.addElement(tempNote)
             }
         }
-        sixteenthnoteIB.setOnClickListener{
+        sixteenthnoteIB.setOnClickListener{//same as wholeNoteIB but createNote is called with sixteenthNote image
             notePlace = determineIV()
             if(notes) {
                 tempNote = createNote(notePlace,R.drawable.sixteenthnotesmall,uparrowIB,downarrowIB, notes)
@@ -160,19 +162,18 @@ class MainActivity : AppCompatActivity() {
             }
         }
         uparrowIB.setOnClickListener{
-            if(muse[((currentPage * 4) + ((noteCounter - 1) % 4))].positionOnScale == 10 && !muse[((currentPage * 4) + ((noteCounter- 1) % 4))].topStaff) {
-                for(i in 1..12)
+            if(muse[((currentPage * 4) + ((noteCounter - 1) % 4))].positionOnScale == 10 && !muse[((currentPage * 4) + ((noteCounter- 1) % 4))].topStaff) {//if the current note is on the bottom staff and the note position is 10(top of bottom staff)
+                for(i in 1..12)// jump to top staff
                     moveNote(notePlace, R.drawable.uparrowsmall, uparrowIB, downarrowIB)
-                muse[((currentPage * 4) + ((noteCounter- 1) % 4))].forcePositionOnScale(muse[((currentPage * 4) + ((noteCounter- 1) % 4))].positionOnScale++)
-                muse[((currentPage * 4) + ((noteCounter- 1) % 4))].topStaff = true
+                muse[((currentPage * 4) + ((noteCounter- 1) % 4))].forcePositionOnScale(muse[((currentPage * 4) + ((noteCounter- 1) % 4))].positionOnScale++)//adjust the position in the class
+                muse[((currentPage * 4) + ((noteCounter- 1) % 4))].topStaff = true//set the boolean of the note in the vector to be on the top staff
             }
-            else if(muse[((currentPage * 4) + ((noteCounter- 1) % 4))].positionOnScale in 0..19) {
-                moveNote(notePlace, R.drawable.uparrowsmall, uparrowIB, downarrowIB)
-                muse[((currentPage * 4) + ((noteCounter- 1) % 4))].forcePositionOnScale(muse[((currentPage * 4) + ((noteCounter- 1) % 4))].positionOnScale++)
+            else if(muse[((currentPage * 4) + ((noteCounter- 1) % 4))].positionOnScale in 0..19) {//if not on the bottom staff, or not at the tenth position
+                moveNote(notePlace, R.drawable.uparrowsmall, uparrowIB, downarrowIB)//move note up one position
+                muse[((currentPage * 4) + ((noteCounter- 1) % 4))].forcePositionOnScale(muse[((currentPage * 4) + ((noteCounter- 1) % 4))].positionOnScale++)// adjust position in class
             }
-
         }
-        downarrowIB.setOnClickListener{
+        downarrowIB.setOnClickListener{//same as up arrow but inversed top/bottom
             if(muse[((currentPage * 4) + ((noteCounter- 1) % 4))].positionOnScale == 10 && muse[((currentPage * 4) + ((noteCounter- 1) % 4))].topStaff) {
                 for(i in 1..12)
                     moveNote(notePlace,R.drawable.downarrowsmall,uparrowIB,downarrowIB)
@@ -185,65 +186,63 @@ class MainActivity : AppCompatActivity() {
             }
         }
         notesrestsBT.setOnClickListener{
-            if(notes){
+            if(notes){//if notes are being displayed, display rests
                 wholenoteIB.setImageResource(R.drawable.wholerestsmall)
                 halfnoteIB.setImageResource(R.drawable.halfrestsmall)
                 quarternoteIB.setImageResource(R.drawable.quarterrestsmall)
                 eighthnoteIB.setImageResource(R.drawable.eighthrestsmall)
                 sixteenthnoteIB.setImageResource(R.drawable.sixteenthrestsmall)
-                notes = false
+                notes = false//set notes boolean to false
             }
-            else{
+            else{//if rests are being displayed, display notes
                 wholenoteIB.setImageResource(R.drawable.wholenote)
                 halfnoteIB.setImageResource(R.drawable.halfnote)
                 quarternoteIB.setImageResource(R.drawable.quarternote)
                 eighthnoteIB.setImageResource(R.drawable.eighthnote)
                 sixteenthnoteIB.setImageResource(R.drawable.sixteenthnote)
-                notes = true
+                notes = true//set notes boolean to true
             }
         }
     }
 
+    //createNote creates a visual and class instatiation of a note, and returns the note to be added to the vector
     fun createNote(currentIV : ImageView, currentImage : Int, uparrow : ImageButton, downarrow : ImageButton, notes : Boolean) : Note {
-        noteCounter++
-        var tempNote = Note("whole", 15)
-        when(currentImage){
+        noteCounter++//increment note counter
+        var tempNote = Note("half", 15)//create note to be returned
+        when(currentImage){//return string version of currentImage
             R.drawable.wholenotesmall -> tempNote.noteType = "whole"
             R.drawable.halfnotesmall -> tempNote.noteType = "half"
             R.drawable.quarternotesmall -> tempNote.noteType = "quarter"
             R.drawable.eighthnotesmall -> tempNote.noteType = "eighth"
             R.drawable.sixteenthnotesmall -> tempNote.noteType = "sixteenth"
-            else -> "whole"
         }
-        currentIV?.let {
-            if (currentImage == R.drawable.wholenotesmall) {
-                uparrow.y = (uparrow.y + 60)
-                currentIV.scaleX = .5.toFloat()
-                currentIV.scaleY = .5.toFloat()
-                currentIV.y = currentIV.y + 35
+        currentIV?.let {//if the current image view exists(if it dosent we have a problem...)
+            if (currentImage == R.drawable.wholenotesmall) {//if that image is wholenotesmall
+                uparrow.y = (uparrow.y + 60)//increase y position of uparrow
+                currentIV.scaleX = .5.toFloat()//scale image view to accomedate smaller image of whole note
+                currentIV.scaleY = .5.toFloat()//scale image view to accomedate smaller image of whole note
+                currentIV.y = currentIV.y + 35// increase y position of current image to make scaling appear to not happen
             }
-            else {
+            else {// otherwise, set scale to default
                 currentIV.scaleX = 1.toFloat()
                 currentIV.scaleY = 1.toFloat()
             }
-            it.setImageResource(currentImage)
-            it.visibility = View.VISIBLE
-            uparrow.y = currentIV.y - 55
-            downarrow.y = currentIV.y + 100
-            uparrow.x = currentIV.x
-            downarrow.x = currentIV.x
-                currentIV.setImageResource(currentImage)
-                currentIV.visibility = View.VISIBLE
-                if(notes) {
+            it.setImageResource(currentImage)// set the current image view to the current image
+            it.visibility = View.VISIBLE// make current image view visibile
+            uparrow.y = currentIV.y - 55// set y position of up arrow to above the current image view
+            downarrow.y = currentIV.y + 100//set y position of down arrow to below the current image view
+            uparrow.x = currentIV.x//set x position of up arrow to the x of the current image view
+            downarrow.x = currentIV.x// set x position of down arrow to x position of current image view
+                if(notes) {// if the note being created is a note and not a rest, make arrows visibile
                     uparrow.visibility = View.VISIBLE
                     downarrow.visibility = View.VISIBLE
                 }
-                else{
+                else{// if note being created is a rest, make arrows invisible
                     uparrow.visibility = View.INVISIBLE
                     downarrow.visibility = View.INVISIBLE
                 }
         }
-        return tempNote
+        return tempNote // return the temporary note created
     }
 
     enum class KeySignature(val number: Int, val accidents: Array<Int>, var sORb : Char) {
@@ -366,20 +365,23 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    //moves note on up or down arrow button press
     fun moveNote(currentIV : ImageView,currentImage : Int, uparrow : ImageButton, downarrow : ImageButton){
-        if(currentImage == R.drawable.uparrowsmall)
+        if(currentImage == R.drawable.uparrowsmall)// if up arrow was pressed, move current image view and up and down arrows up
         {
             uparrow.y = uparrow.y -14
             downarrow.y=downarrow.y - 14
             currentIV.y = currentIV.y - 14
         }
-        else{
+        else{// if down arrow was pressed, move current image view, up arrow, and down arrow down
             uparrow.y = uparrow.y +14
             downarrow.y=downarrow.y + 14
             currentIV.y = currentIV.y + 14
         }
     }
 }
+
+//function to fix downwards drift if adjusting a note from a whole note.
     fun fromWholeNote(currentIV : ImageView, uparrow : ImageButton, downarrow : ImageButton){
         currentIV.y = currentIV.y-35
         downarrow.y = downarrow.y-35
