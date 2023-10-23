@@ -46,6 +46,7 @@ class MainActivity : AppCompatActivity() {
         var muse = Vector<Note>()// vector of notes that will be in charge of storing created music
         muse.ensureCapacity(100) //sets default minimum capacity to 100(not sure if we need this... vectors in kotlin are weird
         var currentPage : Int = 0//keeps track of what page you are on from left/right swipe features
+        var pages : Int = 0//keeps track of how many pages there are
 
         //function determineIV uses class's note counter to return a place for the next note to be
         fun determineIV() : ImageView {
@@ -165,24 +166,24 @@ class MainActivity : AppCompatActivity() {
             if(muse[((currentPage * 4) + ((noteCounter - 1) % 4))].positionOnScale == 10 && !muse[((currentPage * 4) + ((noteCounter- 1) % 4))].topStaff) {//if the current note is on the bottom staff and the note position is 10(top of bottom staff)
                 for(i in 1..12)// jump to top staff
                     moveNote(notePlace, R.drawable.uparrowsmall, uparrowIB, downarrowIB)
-                muse[((currentPage * 4) + ((noteCounter- 1) % 4))].forcePositionOnScale(muse[((currentPage * 4) + ((noteCounter- 1) % 4))].positionOnScale++)//adjust the position in the class
+                muse[((currentPage * 4) + ((noteCounter- 1) % 4))].positionOnScale++//adjust the position in the class
                 muse[((currentPage * 4) + ((noteCounter- 1) % 4))].topStaff = true//set the boolean of the note in the vector to be on the top staff
             }
             else if(muse[((currentPage * 4) + ((noteCounter- 1) % 4))].positionOnScale in 0..19) {//if not on the bottom staff, or not at the tenth position
                 moveNote(notePlace, R.drawable.uparrowsmall, uparrowIB, downarrowIB)//move note up one position
-                muse[((currentPage * 4) + ((noteCounter- 1) % 4))].forcePositionOnScale(muse[((currentPage * 4) + ((noteCounter- 1) % 4))].positionOnScale++)// adjust position in class
+                muse[((currentPage * 4) + ((noteCounter- 1) % 4))].positionOnScale++//adjust the position in the class
             }
         }
         downarrowIB.setOnClickListener{//same as up arrow but inversed top/bottom
             if(muse[((currentPage * 4) + ((noteCounter- 1) % 4))].positionOnScale == 10 && muse[((currentPage * 4) + ((noteCounter- 1) % 4))].topStaff) {
                 for(i in 1..12)
                     moveNote(notePlace,R.drawable.downarrowsmall,uparrowIB,downarrowIB)
-                muse[((currentPage * 4) + ((noteCounter- 1) % 4))].forcePositionOnScale(muse[((currentPage * 4) + ((noteCounter- 1) % 4))].positionOnScale--)
+                muse[((currentPage * 4) + ((noteCounter- 1) % 4))].positionOnScale--
                 muse[((currentPage * 4) + ((noteCounter- 1) % 4))].topStaff = false
             }
             else if(muse[((currentPage * 4) + ((noteCounter- 1) % 4))].positionOnScale in 1..20) {
                 moveNote(notePlace, R.drawable.downarrowsmall, uparrowIB, downarrowIB)
-                muse[((currentPage * 4) + ((noteCounter- 1) % 4))].forcePositionOnScale(muse[((currentPage * 4) + ((noteCounter- 1) % 4))].positionOnScale--)
+                muse[((currentPage * 4) + ((noteCounter- 1) % 4))].positionOnScale--
             }
         }
         notesrestsBT.setOnClickListener{
@@ -233,14 +234,14 @@ class MainActivity : AppCompatActivity() {
             downarrow.y = currentIV.y + 100//set y position of down arrow to below the current image view
             uparrow.x = currentIV.x//set x position of up arrow to the x of the current image view
             downarrow.x = currentIV.x// set x position of down arrow to x position of current image view
-                if(notes) {// if the note being created is a note and not a rest, make arrows visibile
+            if(notes) {// if the note being created is a note and not a rest, make arrows visibile
                     uparrow.visibility = View.VISIBLE
                     downarrow.visibility = View.VISIBLE
-                }
-                else{// if note being created is a rest, make arrows invisible
+            }
+            else{// if note being created is a rest, make arrows invisible
                     uparrow.visibility = View.INVISIBLE
                     downarrow.visibility = View.INVISIBLE
-                }
+            }
         }
         return tempNote // return the temporary note created
     }
