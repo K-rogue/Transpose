@@ -1,6 +1,7 @@
 package com.zybooks.transpose
 
 import Note
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -491,6 +492,7 @@ class MainActivity : AppCompatActivity() {
             downarrow.y=downarrow.y + 14
             currentIV.y = currentIV.y + 14
         }
+
     }
 }
 
@@ -500,3 +502,9 @@ class MainActivity : AppCompatActivity() {
         downarrow.y = downarrow.y-35
         uparrow.y = uparrow.y-35
     }
+
+/* Code to play note c2
+        var myNote = Note("quarter", 0)
+        myNote.loadSound(this)
+        println("Requesting playback for note: " + myNote.getNoteName())
+ */
