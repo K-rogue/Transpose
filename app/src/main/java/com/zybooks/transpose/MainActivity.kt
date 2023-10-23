@@ -39,6 +39,9 @@ class MainActivity : AppCompatActivity() {
         val uparrowIB : ImageButton = findViewById<ImageButton>(R.id.uparrowIB)
         val downarrowIB : ImageButton = findViewById<ImageButton>(R.id.downarrowIB)
         val notesrestsBT : Button = findViewById<Button>(R.id.notesrestsBT)
+        val sharpIB : ImageButton = findViewById<ImageButton>(R.id.sharpIB)
+        val natrualIB : ImageButton = findViewById<ImageButton>(R.id.natrualIB)
+        val flatIB : ImageButton = findViewById<ImageButton>(R.id.flatIB)
 
         // decleration of variables
         var notes : Boolean = true // used to keep track of if notes or rests are being displayed
@@ -58,6 +61,20 @@ class MainActivity : AppCompatActivity() {
                 else -> return noteoneIV
             }
         }
+        //emables accidental buttons
+        fun enableAccidentals(){
+
+            sharpIB.isEnabled = true
+            natrualIB.isEnabled = true
+            flatIB.isEnabled = true
+        }
+        //disables accidental buttons
+        fun disableAccidentals(){
+
+            sharpIB.isEnabled = false
+            natrualIB.isEnabled = false
+            flatIB.isEnabled = false
+        }
 
         //set initial visibility for some image views and buttons to be invisible
         noteoneIV.visibility = View.INVISIBLE
@@ -68,17 +85,95 @@ class MainActivity : AppCompatActivity() {
         downarrowIB.visibility = View.INVISIBLE
 
         //disables invisible buttons so they cant accidentally be pressed
-        uparrowIB.isActivated = false
-        downarrowIB.isActivated = false
+        uparrowIB.isEnabled = false
+        downarrowIB.isEnabled = false
+        sharpIB.isEnabled = false
+        natrualIB.isEnabled = false
+        flatIB.isEnabled = false
+
 
         //creation of on click listeners
+        sharpIB.setOnClickListener{
+            when(muse[((currentPage * 4) + ((noteCounter-1) % 4))].accidental) {
+                "none","natural","flat" ->{
+                    when(muse[((currentPage * 4) + ((noteCounter-1) % 4))].noteType){
+                        "whole"-> notePlace.setImageResource(R.drawable.wholenotesharp)
+                        "half" -> notePlace.setImageResource(R.drawable.halfnotesharp)
+                        "quarter" -> notePlace.setImageResource(R.drawable.quarternotesharp)
+                        "eighth" -> notePlace.setImageResource(R.drawable.eighthnotesharp)
+                        "sixteenth"-> notePlace.setImageResource(R.drawable.sixteenthnotesharp)
+                    }
+                    muse[((currentPage * 4) + ((noteCounter-1) % 4))].accidental = "sharp"
+                }
+                "sharp"->{
+                    when(muse[((currentPage * 4) + ((noteCounter-1) % 4))].noteType){
+                    "whole"-> notePlace.setImageResource(R.drawable.wholenotesmall)
+                    "half" -> notePlace.setImageResource(R.drawable.halfnotesmall)
+                    "quarter" -> notePlace.setImageResource(R.drawable.quarternotesmall)
+                    "eighth" -> notePlace.setImageResource(R.drawable.eighthnotesmall)
+                    "sixteenth"-> notePlace.setImageResource(R.drawable.sixteenthnotesmall)
+                }
+                    muse[((currentPage * 4) + ((noteCounter-1) % 4))].accidental = "none"
+                }
+            }
+        }
+        natrualIB.setOnClickListener{
+            when(muse[((currentPage * 4) + ((noteCounter-1) % 4))].accidental) {
+                "none","sharp","flat" ->{
+                    when(muse[((currentPage * 4) + ((noteCounter-1) % 4))].noteType){
+                        "whole"-> notePlace.setImageResource(R.drawable.wholenotenatural)
+                        "half" -> notePlace.setImageResource(R.drawable.halfnotenatural)
+                        "quarter" -> notePlace.setImageResource(R.drawable.quarternotenatural)
+                        "eighth" -> notePlace.setImageResource(R.drawable.eighthnotenatural)
+                        "sixteenth"-> notePlace.setImageResource(R.drawable.sixteenthnotenatural)
+                    }
+                    muse[((currentPage * 4) + ((noteCounter-1) % 4))].accidental = "natural"
+                }
+                "natural"->{
+                    when(muse[((currentPage * 4) + ((noteCounter-1) % 4))].noteType){
+                        "whole"-> notePlace.setImageResource(R.drawable.wholenotesmall)
+                        "half" -> notePlace.setImageResource(R.drawable.halfnotesmall)
+                        "quarter" -> notePlace.setImageResource(R.drawable.quarternotesmall)
+                        "eighth" -> notePlace.setImageResource(R.drawable.eighthnotesmall)
+                        "sixteenth"-> notePlace.setImageResource(R.drawable.sixteenthnotesmall)
+                    }
+                    muse[((currentPage * 4) + ((noteCounter-1) % 4))].accidental = "none"
+                }
+            }
+        }
+        flatIB.setOnClickListener{
+            when(muse[((currentPage * 4) + ((noteCounter-1) % 4))].accidental) {
+                "none","natural","sharp" ->{
+                    when(muse[((currentPage * 4) + ((noteCounter-1) % 4))].noteType){
+                        "whole"-> notePlace.setImageResource(R.drawable.wholenoteflat)
+                        "half" -> notePlace.setImageResource(R.drawable.halfnoteflat)
+                        "quarter" -> notePlace.setImageResource(R.drawable.quarternoteflat)
+                        "eighth" -> notePlace.setImageResource(R.drawable.eighthnoteflat)
+                        "sixteenth"-> notePlace.setImageResource(R.drawable.sixteenthnoteflat)
+                    }
+                    muse[((currentPage * 4) + ((noteCounter-1) % 4))].accidental = "flat"
+                }
+                "flat"->{
+                    when(muse[((currentPage * 4) + ((noteCounter-1) % 4))].noteType){
+                        "whole"-> notePlace.setImageResource(R.drawable.wholenotesmall)
+                        "half" -> notePlace.setImageResource(R.drawable.halfnotesmall)
+                        "quarter" -> notePlace.setImageResource(R.drawable.quarternotesmall)
+                        "eighth" -> notePlace.setImageResource(R.drawable.eighthnotesmall)
+                        "sixteenth"-> notePlace.setImageResource(R.drawable.sixteenthnotesmall)
+                    }
+                    muse[((currentPage * 4) + ((noteCounter-1) % 4))].accidental = "none"
+                }
+            }
+        }
         wholenoteIB.setOnClickListener{
             notePlace = determineIV()// determines the place
             if(notes) {//if motes are being displayed
                 tempNote = createNote(notePlace, R.drawable.wholenotesmall, uparrowIB, downarrowIB, notes) // set tempNote to the result of the createNote function
+                enableAccidentals()
             }
             else{//if rests are being displayed
                 tempNote = createNote(notePlace, R.drawable.wholerestsmall, uparrowIB, downarrowIB, notes)// set tempNote to result of the createNote function
+                disableAccidentals()
             }
             if(muse.size > ((currentPage * 4) + ((noteCounter- 1) % 4))) {//if the size of the vector(size equals 0 on first call as no note has been added yet) is larger than the number of pages(with 4 notes each) plus the number of notes on the current page, then a note was edited, not created
                 if(muse[((currentPage * 4) + ((noteCounter-1) % 4))].noteType == "whole") {// if the previous note was a whole note
@@ -92,11 +187,14 @@ class MainActivity : AppCompatActivity() {
         }
         halfnoteIB.setOnClickListener{//same as wholeNoteIB but createNote is called with halfnote image
             notePlace = determineIV()
+
             if(notes) {
                 tempNote = createNote(notePlace, R.drawable.halfnotesmall, uparrowIB, downarrowIB, notes)
+                enableAccidentals()
             }
             else{
                 tempNote = createNote(notePlace, R.drawable.halfrestsmall, uparrowIB, downarrowIB, notes)
+                disableAccidentals()
             }
             if(muse.size > ((currentPage * 4) + ((noteCounter- 1) % 4))) {
                 if(muse[((currentPage * 4) + ((noteCounter-1) % 4))].noteType == "whole") {
@@ -110,11 +208,14 @@ class MainActivity : AppCompatActivity() {
         }
         quarternoteIB.setOnClickListener {//same as wholeNoteIB but createNote is called with quarternote image
             notePlace = determineIV()
+
             if (notes) {
                 tempNote = createNote(notePlace, R.drawable.quarternotesmall, uparrowIB, downarrowIB, notes)
+                enableAccidentals()
             }
             else{
                 tempNote = createNote(notePlace, R.drawable.quarterrestsmall, uparrowIB, downarrowIB, notes)
+                disableAccidentals()
             }
             if(muse.size > ((currentPage * 4) + ((noteCounter- 1) % 4))) {
                 if(muse[((currentPage * 4) + ((noteCounter-1) % 4))].noteType == "whole") {
@@ -128,11 +229,14 @@ class MainActivity : AppCompatActivity() {
         }
         eighthnoteIB.setOnClickListener{//same as wholeNoteIB but createNote is called with eighthNote image
             notePlace = determineIV()
+
             if(notes) {
                 tempNote = createNote(notePlace, R.drawable.eighthnotesmall, uparrowIB, downarrowIB, notes)
+                enableAccidentals()
             }
             else{
                 tempNote = createNote(notePlace, R.drawable.eighthrestsmall, uparrowIB, downarrowIB, notes)
+                disableAccidentals()
             }
             if(muse.size > ((currentPage * 4) + ((noteCounter- 1) % 4))) {
                 if(muse[((currentPage * 4) + ((noteCounter-1) % 4))].noteType == "whole") {
@@ -146,11 +250,14 @@ class MainActivity : AppCompatActivity() {
         }
         sixteenthnoteIB.setOnClickListener{//same as wholeNoteIB but createNote is called with sixteenthNote image
             notePlace = determineIV()
+
             if(notes) {
                 tempNote = createNote(notePlace,R.drawable.sixteenthnotesmall,uparrowIB,downarrowIB, notes)
+                enableAccidentals()
             }
             else{
                 tempNote = createNote(notePlace, R.drawable.sixteenthrestsmall, uparrowIB, downarrowIB, notes)
+                disableAccidentals()
             }
             if(muse.size > ((currentPage * 4) + ((noteCounter- 1) % 4))) {
                 if(muse[((currentPage * 4) + ((noteCounter-1) % 4))].noteType == "whole") {
@@ -209,6 +316,7 @@ class MainActivity : AppCompatActivity() {
     //createNote creates a visual and class instatiation of a note, and returns the note to be added to the vector
     fun createNote(currentIV : ImageView, currentImage : Int, uparrow : ImageButton, downarrow : ImageButton, notes : Boolean) : Note {
         noteCounter++//increment note counter
+
         var tempNote = Note("half", 15)//create note to be returned
         when(currentImage){//return string version of currentImage
             R.drawable.wholenotesmall -> tempNote.noteType = "whole"
@@ -237,10 +345,14 @@ class MainActivity : AppCompatActivity() {
             if(notes) {// if the note being created is a note and not a rest, make arrows visibile
                     uparrow.visibility = View.VISIBLE
                     downarrow.visibility = View.VISIBLE
+                    uparrow.isEnabled = true
+                    downarrow.isEnabled = true
             }
             else{// if note being created is a rest, make arrows invisible
                     uparrow.visibility = View.INVISIBLE
                     downarrow.visibility = View.INVISIBLE
+                    uparrow.isEnabled = false
+                    downarrow.isEnabled = false
             }
         }
         return tempNote // return the temporary note created

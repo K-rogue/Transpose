@@ -7,6 +7,7 @@ data class Note(var noteType: String, var positionOnScale: Int) {
     private var soundId: Int? = null
     private var noteName : String
     private var duration : Double
+    var accidental : String = "none"
     var topStaff : Boolean = true
 
     init {
