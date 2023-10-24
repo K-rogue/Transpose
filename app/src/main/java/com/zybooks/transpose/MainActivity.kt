@@ -106,7 +106,7 @@ class MainActivity : AppCompatActivity() {
                         "sixteenth"-> notePlace.setImageResource(R.drawable.sixteenthnotesharp)
                     }
                     oldAccidental = muse[((currentPage * 4) + ((noteCounter-1) % 4))].accidental
-                    muse[((currentPage * 4) + ((noteCounter-1) % 4))].accidental = "s"
+                    muse[((currentPage * 4) + ((noteCounter-1) % 4))].accidental = 's'
                     if(muse[((currentPage * 4) + ((noteCounter-1) % 4))].noteType != "whole") {
                         notePlace.scaleX = 1.5.toFloat()
                         notePlace.scaleY = 1.5.toFloat()
@@ -150,7 +150,7 @@ class MainActivity : AppCompatActivity() {
                         "sixteenth"-> notePlace.setImageResource(R.drawable.sixteenthnotenatural)
                     }
                     oldAccidental = muse[((currentPage * 4) + ((noteCounter-1) % 4))].accidental
-                    muse[((currentPage * 4) + ((noteCounter-1) % 4))].accidental = "n"
+                    muse[((currentPage * 4) + ((noteCounter-1) % 4))].accidental = 'n'
                     if(muse[((currentPage * 4) + ((noteCounter-1) % 4))].noteType != "whole") {
                         notePlace.scaleX = 1.5.toFloat()
                         notePlace.scaleY = 1.5.toFloat()
@@ -194,6 +194,7 @@ class MainActivity : AppCompatActivity() {
                         "eighth" -> notePlace.setImageResource(R.drawable.eighthnoteflat)
                         "sixteenth"-> notePlace.setImageResource(R.drawable.sixteenthnoteflat)
                     }
+                    oldAccidental = muse[((currentPage * 4) + ((noteCounter-1) % 4))].accidental
                     muse[((currentPage * 4) + ((noteCounter-1) % 4))].accidental = 'b'
                     if(muse[((currentPage * 4) + ((noteCounter-1) % 4))].noteType != "whole") {
                         notePlace.scaleX = 1.5.toFloat()
@@ -202,7 +203,6 @@ class MainActivity : AppCompatActivity() {
                     else {
                         notePlace.scaleX = 1.toFloat()
                         notePlace.scaleY = 1.toFloat()
-                        if(oldAccidental == ' ')
                         notePlace.y = notePlace.y - 25
                     }
                 }
@@ -222,6 +222,7 @@ class MainActivity : AppCompatActivity() {
                     else{
                         notePlace.scaleX = .5.toFloat()
                         notePlace.scaleY = .5.toFloat()
+                        if(oldAccidental == ' ')
                         notePlace.y= notePlace.y +25
                     }
                 }
@@ -240,7 +241,7 @@ class MainActivity : AppCompatActivity() {
             if(muse.size > ((currentPage * 4) + ((noteCounter- 1) % 4))) {//if the size of the vector(size equals 0 on first call as no note has been added yet) is larger than the number of pages(with 4 notes each) plus the number of notes on the current page, then a note was edited, not created
                 if(muse[((currentPage * 4) + ((noteCounter-1) % 4))].noteType == "whole") {// if the previous note was a whole note
                     fromWholeNote(notePlace,uparrowIB,downarrowIB) // fix the height display issues by using fromWholeNote function
-                    if(muse[((currentPage * 4) + ((noteCounter-1) % 4))].accidental != "none"){//if the previous note was an accidental whole note
+                    if(muse[((currentPage * 4) + ((noteCounter-1) % 4))].accidental != ' '){//if the previous note was an accidental whole note
                         fromAccidentalWholeNote(notePlace,uparrowIB,downarrowIB)//fix the height display issues by using fromAccidentalWholeNote
                     }
                 }
@@ -264,7 +265,7 @@ class MainActivity : AppCompatActivity() {
             if(muse.size > ((currentPage * 4) + ((noteCounter- 1) % 4))) {
                 if(muse[((currentPage * 4) + ((noteCounter-1) % 4))].noteType == "whole") {
                     fromWholeNote(notePlace,uparrowIB,downarrowIB)
-                    if(muse[((currentPage * 4) + ((noteCounter-1) % 4))].accidental != "none"){
+                    if(muse[((currentPage * 4) + ((noteCounter-1) % 4))].accidental != 'n'){
                         fromAccidentalWholeNote(notePlace,uparrowIB,downarrowIB)
                     }
                 }
@@ -288,7 +289,7 @@ class MainActivity : AppCompatActivity() {
             if(muse.size > ((currentPage * 4) + ((noteCounter- 1) % 4))) {
                 if(muse[((currentPage * 4) + ((noteCounter-1) % 4))].noteType == "whole") {
                     fromWholeNote(notePlace,uparrowIB,downarrowIB)
-                    if(muse[((currentPage * 4) + ((noteCounter-1) % 4))].accidental != "none"){
+                    if(muse[((currentPage * 4) + ((noteCounter-1) % 4))].accidental != ' '){
                         fromAccidentalWholeNote(notePlace,uparrowIB,downarrowIB)
                     }
                 }
@@ -312,7 +313,7 @@ class MainActivity : AppCompatActivity() {
             if(muse.size > ((currentPage * 4) + ((noteCounter- 1) % 4))) {
                 if(muse[((currentPage * 4) + ((noteCounter-1) % 4))].noteType == "whole") {
                     fromWholeNote(notePlace,uparrowIB,downarrowIB)
-                    if(muse[((currentPage * 4) + ((noteCounter-1) % 4))].accidental != "none"){
+                    if(muse[((currentPage * 4) + ((noteCounter-1) % 4))].accidental != ' '){
                         fromAccidentalWholeNote(notePlace,uparrowIB,downarrowIB)
                     }
                 }
@@ -336,7 +337,7 @@ class MainActivity : AppCompatActivity() {
             if(muse.size > ((currentPage * 4) + ((noteCounter- 1) % 4))) {
                 if(muse[((currentPage * 4) + ((noteCounter-1) % 4))].noteType == "whole") {
                     fromWholeNote(notePlace,uparrowIB,downarrowIB)
-                    if(muse[((currentPage * 4) + ((noteCounter-1) % 4))].accidental != "none"){
+                    if(muse[((currentPage * 4) + ((noteCounter-1) % 4))].accidental != ' '){
                         fromAccidentalWholeNote(notePlace,uparrowIB,downarrowIB)
                     }
                 }
@@ -541,7 +542,7 @@ class MainActivity : AppCompatActivity() {
     fun moveNote(note: Note, currentIV : ImageView,currentImage : Int, uparrow : ImageButton, downarrow : ImageButton){
         if(currentImage == R.drawable.uparrowsmall)// if up arrow was pressed, move current image view and up and down arrows up
         {
-            if (note.positionOnScale == 10 && note.positionOnScale < 23) {
+            if (note.positionOnScale == 11 && note.positionOnScale < 23) {
                 uparrow.y = uparrow.y - (12 * 14)
                 downarrow.y = downarrow.y - (12 * 14)
                 currentIV.y = currentIV.y - (12 * 14)
@@ -555,7 +556,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
         else{// if down arrow was pressed, move current image view, up arrow, and down arrow down
-            if (note.positionOnScale == 11 && note.positionOnScale > 0) {
+            if (note.positionOnScale == 12 && note.positionOnScale > 0) {
                 uparrow.y = uparrow.y + (12 * 14)
                 downarrow.y = downarrow.y + (12 * 14)
                 currentIV.y = currentIV.y + (12 * 14)
