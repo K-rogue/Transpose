@@ -239,12 +239,6 @@ class MainActivity : AppCompatActivity() {
                 disableAccidentals()
             }
             if(muse.size > ((currentPage * 4) + ((noteCounter- 1) % 4))) {//if the size of the vector(size equals 0 on first call as no note has been added yet) is larger than the number of pages(with 4 notes each) plus the number of notes on the current page, then a note was edited, not created
-                if(muse[((currentPage * 4) + ((noteCounter-1) % 4))].noteType == "whole") {// if the previous note was a whole note
-                    fromWholeNote(notePlace,uparrowIB,downarrowIB) // fix the height display issues by using fromWholeNote function
-                    if(muse[((currentPage * 4) + ((noteCounter-1) % 4))].accidental != ' '){//if the previous note was an accidental whole note
-                        fromAccidentalWholeNote(notePlace,uparrowIB,downarrowIB)//fix the height display issues by using fromAccidentalWholeNote
-                    }
-                }
                 muse[((currentPage * 4) + ((noteCounter - 1) % 4))] = tempNote//set the appropriate vector place to the temp note
             }
             else{// if the number of notes on the page plus the number of pages*4 notes per page is equal to the size of the vector, then a new note was created
@@ -263,12 +257,6 @@ class MainActivity : AppCompatActivity() {
                 disableAccidentals()
             }
             if(muse.size > ((currentPage * 4) + ((noteCounter- 1) % 4))) {
-                if(muse[((currentPage * 4) + ((noteCounter-1) % 4))].noteType == "whole") {
-                    fromWholeNote(notePlace,uparrowIB,downarrowIB)
-                    if(muse[((currentPage * 4) + ((noteCounter-1) % 4))].accidental != 'n'){
-                        fromAccidentalWholeNote(notePlace,uparrowIB,downarrowIB)
-                    }
-                }
                 muse[((currentPage * 4) + ((noteCounter - 1) % 4))] = tempNote
             }
             else{
@@ -287,12 +275,6 @@ class MainActivity : AppCompatActivity() {
                 disableAccidentals()
             }
             if(muse.size > ((currentPage * 4) + ((noteCounter- 1) % 4))) {
-                if(muse[((currentPage * 4) + ((noteCounter-1) % 4))].noteType == "whole") {
-                    fromWholeNote(notePlace,uparrowIB,downarrowIB)
-                    if(muse[((currentPage * 4) + ((noteCounter-1) % 4))].accidental != ' '){
-                        fromAccidentalWholeNote(notePlace,uparrowIB,downarrowIB)
-                    }
-                }
                 muse[((currentPage * 4) + ((noteCounter - 1) % 4))] = tempNote
             }
             else{
@@ -311,12 +293,6 @@ class MainActivity : AppCompatActivity() {
                 disableAccidentals()
             }
             if(muse.size > ((currentPage * 4) + ((noteCounter- 1) % 4))) {
-                if(muse[((currentPage * 4) + ((noteCounter-1) % 4))].noteType == "whole") {
-                    fromWholeNote(notePlace,uparrowIB,downarrowIB)
-                    if(muse[((currentPage * 4) + ((noteCounter-1) % 4))].accidental != ' '){
-                        fromAccidentalWholeNote(notePlace,uparrowIB,downarrowIB)
-                    }
-                }
                 muse[((currentPage * 4) + ((noteCounter - 1) % 4))] = tempNote
             }
             else{
@@ -335,12 +311,6 @@ class MainActivity : AppCompatActivity() {
                 disableAccidentals()
             }
             if(muse.size > ((currentPage * 4) + ((noteCounter- 1) % 4))) {
-                if(muse[((currentPage * 4) + ((noteCounter-1) % 4))].noteType == "whole") {
-                    fromWholeNote(notePlace,uparrowIB,downarrowIB)
-                    if(muse[((currentPage * 4) + ((noteCounter-1) % 4))].accidental != ' '){
-                        fromAccidentalWholeNote(notePlace,uparrowIB,downarrowIB)
-                    }
-                }
                 muse[((currentPage * 4) + ((noteCounter - 1) % 4))] = tempNote
             }
             else{
@@ -386,6 +356,7 @@ class MainActivity : AppCompatActivity() {
             R.drawable.sixteenthnotesmall -> tempNote.noteType = "sixteenth"
         }
         currentIV?.let {//if the current image view exists(if it dosent we have a problem...)
+            currentIV.y = 65.toFloat()
             if (currentImage == R.drawable.wholenotesmall) {//if that image is wholenotesmall
                 uparrow.y = (uparrow.y + 60)//increase y position of uparrow
                 currentIV.scaleX = .5.toFloat()//scale image view to accomedate smaller image of whole note
@@ -542,13 +513,13 @@ class MainActivity : AppCompatActivity() {
     fun moveNote(note: Note, currentIV : ImageView,currentImage : Int, uparrow : ImageButton, downarrow : ImageButton){
         if(currentImage == R.drawable.uparrowsmall)// if up arrow was pressed, move current image view and up and down arrows up
         {
-            if (note.positionOnScale == 11 && note.positionOnScale < 23) {
+            if (note.positionOnScale == 11) {
                 uparrow.y = uparrow.y - (12 * 14)
                 downarrow.y = downarrow.y - (12 * 14)
                 currentIV.y = currentIV.y - (12 * 14)
                 note.forcePositionOnScale(note.positionOnScale + 1, note.accidental)
             }
-            else{
+            else if(note.positionOnScale < 22){
                 uparrow.y = uparrow.y - 14
                 downarrow.y = downarrow.y - 14
                 currentIV.y = currentIV.y - 14
@@ -556,13 +527,13 @@ class MainActivity : AppCompatActivity() {
             }
         }
         else{// if down arrow was pressed, move current image view, up arrow, and down arrow down
-            if (note.positionOnScale == 12 && note.positionOnScale > 0) {
+            if (note.positionOnScale == 12) {
                 uparrow.y = uparrow.y + (12 * 14)
                 downarrow.y = downarrow.y + (12 * 14)
                 currentIV.y = currentIV.y + (12 * 14)
                 note.forcePositionOnScale(note.positionOnScale - 1, note.accidental)
             }
-            else{
+            else if(note.positionOnScale >= 0){
                 uparrow.y = uparrow.y + 14
                 downarrow.y = downarrow.y + 14
                 currentIV.y = currentIV.y + 14
@@ -572,17 +543,6 @@ class MainActivity : AppCompatActivity() {
     }
 }
 
-//function to fix downwards drift if adjusting a note from a whole note.
-    fun fromWholeNote(currentIV : ImageView, uparrow : ImageButton, downarrow : ImageButton){
-        currentIV.y = currentIV.y-35
-        downarrow.y = downarrow.y-35
-        uparrow.y = uparrow.y-35
-    }
-fun fromAccidentalWholeNote(currentIV : ImageView, uparrow : ImageButton, downarrow : ImageButton){
-    currentIV.y = currentIV.y+25
-    downarrow.y = downarrow.y+25
-    uparrow.y = uparrow.y+25
-}
 
 /* Code to play note c2
         var myNote = Note("quarter", 0)
