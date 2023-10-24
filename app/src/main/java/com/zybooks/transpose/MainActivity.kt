@@ -1,23 +1,21 @@
 package com.zybooks.transpose
 
 import Note
-import android.content.Context
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.GestureDetector
+import android.view.MotionEvent
 import android.view.View
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
-import androidx.core.graphics.drawable.toDrawable
-import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.constraintlayout.widget.Constraints
-import androidx.core.view.marginTop
-import java.security.AccessController.getContext
-import android.content.res.Resources
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.GestureDetectorCompat
 import java.util.Vector
 
-class MainActivity : AppCompatActivity() {
 
+class MainActivity : AppCompatActivity() {
+    private lateinit var detector: GestureDetectorCompat
     //decleration of global variables variables
     var noteCounter : Int = 0 //note counter is used to determine which image view to place the next note in - - should be replaced with vector.size once vector of objects is created
     lateinit var notePlace : ImageView //notePlace will be used as a variable to hold the place of the next note to be placed on the scale
@@ -26,6 +24,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+        detector = GestureDetectorCompat(this,GestureListener())
 
         // declare vals for buttons and image views
         val wholenoteIB : ImageButton = findViewById<ImageButton>(R.id.wholenoteIB)
@@ -52,6 +51,10 @@ class MainActivity : AppCompatActivity() {
         var currentPage : Int = 0//keeps track of what page you are on from left/right swipe features
         var pages : Int = 0//keeps track of how many pages there are
         var oldAccidental : Char = ' '
+        var x1 : Float = 0F
+        var x2 : Float = 0F
+        val MIN_DISTANCE = 100F
+
 
         //function determineIV uses class's note counter to return a place for the next note to be
         fun determineIV() : ImageView {
@@ -92,7 +95,6 @@ class MainActivity : AppCompatActivity() {
         sharpIB.isEnabled = false
         natrualIB.isEnabled = false
         flatIB.isEnabled = false
-
 
         //creation of on click listeners
         sharpIB.setOnClickListener{
@@ -541,9 +543,43 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+
+    override fun onTouchEvent(event: MotionEvent?): Boolean {
+        event.let{
+            if(detector.onTouchEvent(event!!)){
+                return true
+            }
+        }
+        return super.onTouchEvent(event)
+    }
+    inner class GestureListener : GestureDetector.SimpleOnGestureListener(){
+        private val SWIPE_THRESHHOLD = 100F
+        override fun onFling(down: MotionEvent, move: MotionEvent, velocityX: Float, velocityY: Float): Boolean {
+            var diffX = move?.x?.minus(down!!.x) ?: 0.0F
+            return if(Math.abs(diffX) > SWIPE_THRESHHOLD){
+                if(diffX > 0){//swipe right
+                this@MainActivity.onSwipeRight()
+                }
+                else{//swipe left
+                this@MainActivity.onSwipeLeft()
+                }
+                true
+            }
+            else {
+                return super.onFling(down, move, velocityX, velocityY)
+            }
+
+        }
+    }
+
+    private fun onSwipeLeft() {
+        Toast.makeText(this,"left swipe", Toast.LENGTH_LONG).show()
+    }
+
+    private fun onSwipeRight() {
+        Toast.makeText(this,"right swipe", Toast.LENGTH_LONG).show()
+    }
 }
-
-
 /* Code to play note c2
         var myNote = Note("quarter", 0)
         myNote.loadSound(this)
