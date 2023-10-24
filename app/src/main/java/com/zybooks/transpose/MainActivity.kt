@@ -515,10 +515,10 @@ class MainActivity : AppCompatActivity() {
     fun moveNote(note: Note, currentIV : ImageView,currentImage : Int, uparrow : ImageButton, downarrow : ImageButton){
         if(currentImage == R.drawable.uparrowsmall)// if up arrow was pressed, move current image view and up and down arrows up
         {
-            if (note.positionOnScale == 11) {
-                uparrow.y = uparrow.y - (12 * 14)
-                downarrow.y = downarrow.y - (12 * 14)
-                currentIV.y = currentIV.y - (12 * 14)
+            if (note.positionOnScale == 10) {
+                uparrow.y = uparrow.y - (11 * 14)
+                downarrow.y = downarrow.y - (11 * 14)
+                currentIV.y = currentIV.y - (11 * 14)
                 note.forcePositionOnScale(note.positionOnScale + 1, note.accidental)
             }
             else if(note.positionOnScale < 22){
@@ -529,10 +529,10 @@ class MainActivity : AppCompatActivity() {
             }
         }
         else{// if down arrow was pressed, move current image view, up arrow, and down arrow down
-            if (note.positionOnScale == 12) {
-                uparrow.y = uparrow.y + (12 * 14)
-                downarrow.y = downarrow.y + (12 * 14)
-                currentIV.y = currentIV.y + (12 * 14)
+            if (note.positionOnScale == 11) {
+                uparrow.y = uparrow.y + (11 * 14)
+                downarrow.y = downarrow.y + (11 * 14)
+                currentIV.y = currentIV.y + (11 * 14)
                 note.forcePositionOnScale(note.positionOnScale - 1, note.accidental)
             }
             else if(note.positionOnScale >= 0){
