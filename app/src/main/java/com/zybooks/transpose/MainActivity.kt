@@ -34,6 +34,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     lateinit var natrualIB : ImageButton
     lateinit var flatIB : ImageButton
     lateinit var pagesTV : TextView
+    lateinit var staffIV : ImageView
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -48,6 +49,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         val quarternoteIB : ImageButton = findViewById<ImageButton>(R.id.quarternoteIB)
         val eighthnoteIB : ImageButton = findViewById<ImageButton>(R.id.eighthnoteIB)
         val sixteenthnoteIB : ImageButton = findViewById<ImageButton>(R.id.sixteenthnoteIB)
+        staffIV = findViewById<ImageView>(R.id.staffIV)
         noteoneIV = findViewById<ImageView>(R.id.noteoneIV)
         notetwoIV = findViewById<ImageView>(R.id.notetwoIV)
         notethreeIV = findViewById<ImageView>(R.id.notethreeIV)
@@ -132,7 +134,24 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
                     noteCounter++
                 }
-                //Change staff to key signature
+                when(newKey){
+                    KeySignature.CM_am -> staffIV.setImageResource(R.drawable.cm_am)
+                    KeySignature.AM_fsm -> staffIV.setImageResource(R.drawable.am_fsm)
+                    KeySignature.AbM_fm -> staffIV.setImageResource(R.drawable.abm_fm)
+                    KeySignature.BM_gsm -> staffIV.setImageResource(R.drawable.bm_gsm)
+                    KeySignature.BbM_gm -> staffIV.setImageResource(R.drawable.bbm_gm)
+                    KeySignature.CbM -> staffIV.setImageResource(R.drawable.cbm)
+                    KeySignature.CsM -> staffIV.setImageResource(R.drawable.csm)
+                    KeySignature.DM_bm -> staffIV.setImageResource(R.drawable.dm_bm)
+                    KeySignature.DbM_bbm -> staffIV.setImageResource(R.drawable.dbm_bbm)
+                    KeySignature.EM_csm -> staffIV.setImageResource(R.drawable.em_csm)
+                    KeySignature.EbM_cm -> staffIV.setImageResource(R.drawable.ebm_cm)
+                    KeySignature.FM_dm -> staffIV.setImageResource(R.drawable.fm_dm)
+                    KeySignature.FsM_dsm -> staffIV.setImageResource(R.drawable.fsm_dsm)
+                    KeySignature.GM_em -> staffIV.setImageResource(R.drawable.gm_em)
+                    KeySignature.GbM_ebm -> staffIV.setImageResource(R.drawable.gbm_ebm)
+                    else-> staffIV.setImageResource(R.drawable.staff)
+                }
             }
 
             override fun onNothingSelected(parent: AdapterView<*>?) {
