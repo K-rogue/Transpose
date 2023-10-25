@@ -8,6 +8,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GestureDetectorCompat
@@ -30,6 +31,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var sharpIB : ImageButton
     lateinit var natrualIB : ImageButton
     lateinit var flatIB : ImageButton
+    lateinit var pagesTV : TextView
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,6 +40,7 @@ class MainActivity : AppCompatActivity() {
         detector = GestureDetectorCompat(this,GestureListener())
 
         // declare vals for buttons and image views
+        pagesTV = findViewById<TextView>(R.id.pagesTV)
         val wholenoteIB : ImageButton = findViewById<ImageButton>(R.id.wholenoteIB)
         val halfnoteIB : ImageButton = findViewById<ImageButton>(R.id.halfnoteIB)
         val quarternoteIB : ImageButton = findViewById<ImageButton>(R.id.quarternoteIB)
@@ -551,7 +554,7 @@ class MainActivity : AppCompatActivity() {
     fun swipeLeft(currentPage : Int, muse : Vector<Note>){
 
     }
-    fun swipe(muse : Vector<Note>, direction : Boolean,uparrow : ImageButton, downarrow : ImageButton, noteOneIV : ImageView, noteTwoIV : ImageView, noteThreeIV : ImageView, noteFourIV : ImageView, flatIB : ImageButton, sharpIB : ImageButton, naturalIB : ImageButton){
+    fun swipe(muse : Vector<Note>, direction : Boolean,uparrow : ImageButton, downarrow : ImageButton, noteOneIV : ImageView, noteTwoIV : ImageView, noteThreeIV : ImageView, noteFourIV : ImageView, flatIB : ImageButton, sharpIB : ImageButton, naturalIB : ImageButton, pagesTV : TextView){
         var noteViews = arrayOf(noteOneIV,noteTwoIV,noteThreeIV,noteFourIV)
         var tempPosOnScale = 17
         if(direction == true){// if swipe is right to left
@@ -569,9 +572,11 @@ class MainActivity : AppCompatActivity() {
                 naturalIB.isEnabled = false
                 noteCounter = 0
                 currentPage++
+                pagesTV.setText("Page:" + (currentPage + 1).toString())
             }
             else if((muse.size % 4) == 0 && muse.size != 0){//if your not on the last page, it is full, so you can swipe right
                 currentPage++
+                pagesTV.setText("Page:" + (currentPage + 1).toString())
                 uparrow.isEnabled = false
                 downarrow.isEnabled = false
                 uparrow.visibility = View.INVISIBLE
@@ -689,6 +694,7 @@ class MainActivity : AppCompatActivity() {
         else{// else swipe is left
             if(currentPage != 0 && muse.size % 4 == 0){
                 currentPage--
+                pagesTV.setText("Page:" + (currentPage + 1).toString())
                 uparrow.isEnabled = false
                 downarrow.isEnabled = false
                 uparrow.visibility = View.INVISIBLE
@@ -832,11 +838,11 @@ class MainActivity : AppCompatActivity() {
         }
     }
     fun onSwipeLeft() {
-        swipe(muse,true,uparrowIB,downarrowIB,noteoneIV,notetwoIV,notethreeIV,notefourIV,flatIB,sharpIB,natrualIB)
+        swipe(muse,true,uparrowIB,downarrowIB,noteoneIV,notetwoIV,notethreeIV,notefourIV,flatIB,sharpIB,natrualIB,pagesTV)
     }
 
     fun onSwipeRight() {
-        swipe(muse,false,uparrowIB,downarrowIB,noteoneIV,notetwoIV,notethreeIV,notefourIV,flatIB,sharpIB,natrualIB)
+        swipe(muse,false,uparrowIB,downarrowIB,noteoneIV,notetwoIV,notethreeIV,notefourIV,flatIB,sharpIB,natrualIB,pagesTV)
     }
 
 }
