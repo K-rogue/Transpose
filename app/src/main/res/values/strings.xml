@@ -10,6 +10,7 @@
     <string name="beatspermeasureTV">Beats Per Measure:</string>
     <string name="beatspermeasureET">4</string>
     <string name ="playBT">PLAY</string>
+    <string name ="pagesTV">Page : 1</string>
     <string-array name="spinnerItems">
         <item>CM_am</item>
         <item>GM_em</item>

@@ -9,6 +9,7 @@ import android.widget.AdapterView
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Spinner
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -21,6 +22,18 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     //decleration of global variables variables
     var noteCounter : Int = 0 //note counter is used to determine which image view to place the next note in - - should be replaced with vector.size once vector of objects is created
     lateinit var notePlace : ImageView //notePlace will be used as a variable to hold the place of the next note to be placed on the scale
+    var currentPage : Int = 0//keeps track of what page you are on from left/right swipe features
+    var muse = Vector<Note>()// vector of notes that will be in charge of storing created music
+    lateinit var noteoneIV : ImageView
+    lateinit var notetwoIV : ImageView
+    lateinit var notethreeIV : ImageView
+    lateinit var notefourIV : ImageView
+    lateinit var uparrowIB : ImageButton
+    lateinit var downarrowIB : ImageButton
+    lateinit var sharpIB : ImageButton
+    lateinit var natrualIB : ImageButton
+    lateinit var flatIB : ImageButton
+    lateinit var pagesTV : TextView
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,18 +42,22 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         detector = GestureDetectorCompat(this,GestureListener())
 
         // declare vals for buttons and image views
+        pagesTV = findViewById<TextView>(R.id.pagesTV)
         val wholenoteIB : ImageButton = findViewById<ImageButton>(R.id.wholenoteIB)
         val halfnoteIB : ImageButton = findViewById<ImageButton>(R.id.halfnoteIB)
         val quarternoteIB : ImageButton = findViewById<ImageButton>(R.id.quarternoteIB)
         val eighthnoteIB : ImageButton = findViewById<ImageButton>(R.id.eighthnoteIB)
         val sixteenthnoteIB : ImageButton = findViewById<ImageButton>(R.id.sixteenthnoteIB)
-        val noteoneIV : ImageView = findViewById<ImageView>(R.id.noteoneIV)
-        val notetwoIV : ImageView = findViewById<ImageView>(R.id.notetwoIV)
-        val notethreeIV : ImageView = findViewById<ImageView>(R.id.notethreeIV)
-        val notefourIV : ImageView = findViewById<ImageView>(R.id.notefourIV)
-        val uparrowIB : ImageButton = findViewById<ImageButton>(R.id.uparrowIB)
-        val downarrowIB : ImageButton = findViewById<ImageButton>(R.id.downarrowIB)
+        noteoneIV = findViewById<ImageView>(R.id.noteoneIV)
+        notetwoIV = findViewById<ImageView>(R.id.notetwoIV)
+        notethreeIV = findViewById<ImageView>(R.id.notethreeIV)
+        notefourIV = findViewById<ImageView>(R.id.notefourIV)
+        uparrowIB = findViewById<ImageButton>(R.id.uparrowIB)
+        downarrowIB = findViewById<ImageButton>(R.id.downarrowIB)
         val notesrestsBT : Button = findViewById<Button>(R.id.notesrestsBT)
+         sharpIB = findViewById<ImageButton>(R.id.sharpIB)
+         natrualIB = findViewById<ImageButton>(R.id.natrualIB)
+         flatIB = findViewById<ImageButton>(R.id.flatIB)
         val sharpIB : ImageButton = findViewById<ImageButton>(R.id.sharpIB)
         val natrualIB : ImageButton = findViewById<ImageButton>(R.id.natrualIB)
         val flatIB : ImageButton = findViewById<ImageButton>(R.id.flatIB)
@@ -50,14 +67,9 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         // decleration of variables
         var notes : Boolean = true // used to keep track of if notes or rests are being displayed
         var tempNote = Note("whole", 3) // will be used as a note to edit before adding to vector of notes
-        var muse = Vector<Note>()// vector of notes that will be in charge of storing created music
         muse.ensureCapacity(100) //sets default minimum capacity to 100(not sure if we need this... vectors in kotlin are weird
-        var currentPage : Int = 0//keeps track of what page you are on from left/right swipe features
         var pages : Int = 0//keeps track of how many pages there are
         var oldAccidental : Char = ' '
-        var x1 : Float = 0F
-        var x2 : Float = 0F
-        val MIN_DISTANCE = 100F
 
 
         //function determineIV uses class's note counter to return a place for the next note to be
@@ -164,7 +176,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
                         notePlace.scaleX = 1.toFloat()
                         notePlace.scaleY = 1.toFloat()
                         if(oldAccidental == ' ')
-                        notePlace.y= notePlace.y -25
+                            notePlace.y= notePlace.y -25
                     }
                 }
                 's'->{
@@ -208,7 +220,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
                         notePlace.scaleX = 1.toFloat()
                         notePlace.scaleY = 1.toFloat()
                         if(oldAccidental == ' ')
-                        notePlace.y = notePlace.y - 25
+                            notePlace.y = notePlace.y - 25
                     }
                 }
                 'n'->{
@@ -252,7 +264,8 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
                     else {
                         notePlace.scaleX = 1.toFloat()
                         notePlace.scaleY = 1.toFloat()
-                        notePlace.y = notePlace.y - 25
+                        if(oldAccidental == ' ')
+                            notePlace.y = notePlace.y - 25
                     }
                 }
                 'b'->{
@@ -390,14 +403,11 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
                 notes = true//set notes boolean to true
             }
         }
-
     }
-
 
     //createNote creates a visual and class instatiation of a note, and returns the note to be added to the vector
     fun createNote(currentIV : ImageView, currentImage : Int, uparrow : ImageButton, downarrow : ImageButton, notes : Boolean) : Note {
         noteCounter++//increment note counter
-
         var tempNote = Note("half", 17)//create note to be returned
         when(currentImage){//return string version of currentImage
             R.drawable.wholenotesmall -> tempNote.noteType = "whole"
@@ -475,7 +485,6 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         GbM_ebm(6, arrayOf(-1,-1,-1,-1,-1,-1,0), 'b'), //6 flats
         CbM(11, arrayOf(-1,-1,-1,-1,-1,-1,-1), 'b') //7 flats
     }
-
 
     fun transpose(note: Note, fromKey: KeySignature, toKey: KeySignature) : Pair<Int, Char> {
         var difference : Int = toKey.number - fromKey.number //Calculate real number of steps between two notes
@@ -566,9 +575,9 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         if(currentImage == R.drawable.uparrowsmall)// if up arrow was pressed, move current image view and up and down arrows up
         {
             if (note.positionOnScale == 10) {
-                uparrow.y = uparrow.y - (11 * 14)
-                downarrow.y = downarrow.y - (11 * 14)
-                currentIV.y = currentIV.y - (11 * 14)
+                uparrow.y = uparrow.y - (10 * 14)
+                downarrow.y = downarrow.y - (10 * 14)
+                currentIV.y = currentIV.y - (10 * 14)
                 note.forcePositionOnScale(note.positionOnScale + 1, note.accidental)
             }
             else if(note.positionOnScale < 22){
@@ -580,9 +589,9 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         }
         else{// if down arrow was pressed, move current image view, up arrow, and down arrow down
             if (note.positionOnScale == 11) {
-                uparrow.y = uparrow.y + (11 * 14)
-                downarrow.y = downarrow.y + (11 * 14)
-                currentIV.y = currentIV.y + (11 * 14)
+                uparrow.y = uparrow.y + (10 * 14)
+                downarrow.y = downarrow.y + (10 * 14)
+                currentIV.y = currentIV.y + (10 * 14)
                 note.forcePositionOnScale(note.positionOnScale - 1, note.accidental)
             }
             else if(note.positionOnScale >= 0){
@@ -590,6 +599,264 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
                 downarrow.y = downarrow.y + 14
                 currentIV.y = currentIV.y + 14
                 note.forcePositionOnScale(note.positionOnScale - 1, note.accidental)
+            }
+        }
+    }
+    fun swipeLeft(currentPage : Int, muse : Vector<Note>){
+
+    }
+    fun swipe(muse : Vector<Note>, direction : Boolean,uparrow : ImageButton, downarrow : ImageButton, noteOneIV : ImageView, noteTwoIV : ImageView, noteThreeIV : ImageView, noteFourIV : ImageView, flatIB : ImageButton, sharpIB : ImageButton, naturalIB : ImageButton, pagesTV : TextView){
+        var noteViews = arrayOf(noteOneIV,noteTwoIV,noteThreeIV,noteFourIV)
+        var tempPosOnScale = 17
+        if(direction == true){// if swipe is right to left
+            if((muse.size / 4) == (currentPage + 1)){// if the last page is full, and are you on it?
+                uparrow.isEnabled = false
+                downarrow.isEnabled = false
+                uparrow.visibility = View.INVISIBLE
+                downarrow.visibility = View.INVISIBLE
+                noteOneIV.visibility = View.INVISIBLE
+                noteTwoIV.visibility = View.INVISIBLE
+                noteThreeIV.visibility = View.INVISIBLE
+                noteFourIV.visibility = View.INVISIBLE
+                sharpIB.isEnabled = false
+                flatIB.isEnabled = false
+                naturalIB.isEnabled = false
+                noteCounter = 0
+                currentPage++
+                pagesTV.setText("Page:" + (currentPage + 1).toString())
+            }
+            else if((muse.size % 4) == 0 && muse.size != 0){//if your not on the last page, it is full, so you can swipe right
+                currentPage++
+                pagesTV.setText("Page:" + (currentPage + 1).toString())
+                uparrow.isEnabled = false
+                downarrow.isEnabled = false
+                uparrow.visibility = View.INVISIBLE
+                downarrow.visibility = View.INVISIBLE
+                sharpIB.isEnabled = false
+                flatIB.isEnabled = false
+                naturalIB.isEnabled = false
+
+                noteCounter = 0
+                for(i in 0..3){
+                    noteViews[i].y = 65F
+                    noteViews[i].visibility = View.VISIBLE
+                    when(muse[((currentPage * 4) + i)].accidental){
+                        's'->{
+                            when(muse[(currentPage * 4) + i].noteType) {
+                                "whole" -> {
+                                    noteViews[i].setImageResource(R.drawable.wholenotesharp)
+                                    uparrow.y = (uparrow.y + 60)//increase y position of uparrow
+                                    noteViews[i].y = noteViews[i].y + 10// increase y position of current image to make scaling appear to not happen
+                                    noteViews[i].scaleY = 1.toFloat()
+                                    noteViews[i].scaleX = 1.toFloat()
+                                }
+                                "half" -> noteViews[i].setImageResource(R.drawable.halfnotesharp)
+                                "quarter" -> noteViews[i].setImageResource(R.drawable.quarternotesharp)
+                                "eighth" -> noteViews[i].setImageResource(R.drawable.eighthnotesharp)
+                                "sixteenth" -> noteViews[i].setImageResource(R.drawable.sixteenthnotesharp)
+                            }
+                            if(muse[(currentPage * 4) + i].noteType != "whole") {
+                                noteViews[i].scaleX = 1.5.toFloat()
+                                noteViews[i].scaleY = 1.5.toFloat()
+                            }
+                        }
+                        'n'->{
+                            when(muse[(currentPage * 4) + i].noteType){
+                                "whole"->{
+                                    noteViews[i].setImageResource(R.drawable.wholenotenatural)
+                                    uparrow.y = (uparrow.y + 60)//increase y position of uparrow
+                                    noteViews[i].y = noteViews[i].y + 10// increase y position of current image to make scaling appear to not happen
+                                    noteViews[i].scaleY = 1.toFloat()
+                                    noteViews[i].scaleX = 1.toFloat()
+                                }
+                                "half" -> noteViews[i].setImageResource(R.drawable.halfnotenatural)
+                                "quarter" -> noteViews[i].setImageResource(R.drawable.quarternotenatural)
+                                "eighth" -> noteViews[i].setImageResource(R.drawable.eighthnotenatural)
+                                "sixteenth"-> noteViews[i].setImageResource(R.drawable.sixteenthnotenatural)
+                            }
+                            if(muse[(currentPage * 4) + i].noteType != "whole") {
+                                noteViews[i].scaleX = 1.5.toFloat()
+                                noteViews[i].scaleY = 1.5.toFloat()
+                            }
+                        }
+                        'b'->{
+                            when(muse[(currentPage * 4) + i].noteType){
+                                "whole"->{
+                                    noteViews[i].setImageResource(R.drawable.wholenoteflat)
+                                    uparrow.y = (uparrow.y + 60)//increase y position of uparrow
+                                    noteViews[i].y = noteViews[i].y + 10// increase y position of current image to make scaling appear to not happen
+                                    noteViews[i].scaleY = 1.toFloat()
+                                    noteViews[i].scaleX = 1.toFloat()
+                                }
+                                "half" -> noteViews[i].setImageResource(R.drawable.halfnoteflat)
+                                "quarter" -> noteViews[i].setImageResource(R.drawable.quarternoteflat)
+                                "eighth" -> noteViews[i].setImageResource(R.drawable.eighthnoteflat)
+                                "sixteenth"-> noteViews[i].setImageResource(R.drawable.sixteenthnoteflat)
+                            }
+                            if(muse[(currentPage * 4) + i].noteType != "whole") {
+                                noteViews[i].scaleX = 1.5.toFloat()
+                                noteViews[i].scaleY = 1.5.toFloat()
+                            }
+                        }
+                        ' '->{
+                            when(muse[(currentPage * 4) + i].noteType){
+                                "whole"-> {
+                                    noteViews[i].setImageResource(R.drawable.wholenotesmall)
+                                    uparrow.y = (uparrow.y + 60)//increase y position of uparrow
+                                    noteViews[i].scaleX = .5.toFloat()//scale image view to accomedate smaller image of whole note
+                                    noteViews[i].scaleY = .5.toFloat()//scale image view to accomedate smaller image of whole note
+                                    noteViews[i].y = noteViews[i].y + 35// increase y position of current image to make scaling appear to not happen
+                                }
+                                "half" -> noteViews[i].setImageResource(R.drawable.halfnotesmall)
+                                "quarter" -> noteViews[i].setImageResource(R.drawable.quarternotesmall)
+                                "eighth" -> noteViews[i].setImageResource(R.drawable.eighthnotesmall)
+                                "sixteenth"-> noteViews[i].setImageResource(R.drawable.sixteenthnotesmall)
+                            }
+                            if(muse[(currentPage * 4) + i].noteType != "whole") {
+                                noteViews[i].scaleX = 1.toFloat()
+                                noteViews[i].scaleY = 1.toFloat()
+                            }
+                        }
+                    }
+                    while(tempPosOnScale < muse[(currentPage * 4) + i].positionOnScale) {
+                        tempPosOnScale++
+                        if (tempPosOnScale == 11) {
+                            noteViews[i].y = noteViews[i].y - (10 * 14)
+                        }
+                        else if(tempPosOnScale >= 0){
+                            noteViews[i].y = noteViews[i].y - 14
+                        }
+
+                    }
+                    tempPosOnScale = 17
+                    while(tempPosOnScale > muse[(currentPage * 4) + i].positionOnScale){
+                        tempPosOnScale--
+                        if (tempPosOnScale == 11) {
+                            noteViews[i].y = noteViews[i].y + (10 * 14)
+                        }
+                        else if(tempPosOnScale >= 0){
+                            noteViews[i].y = noteViews[i].y + 14
+                        }
+                    }
+                    tempPosOnScale = 17
+                }
+            }
+        }
+        else{// else swipe is left
+            if(currentPage != 0 && muse.size % 4 == 0){
+                currentPage--
+                pagesTV.setText("Page:" + (currentPage + 1).toString())
+                uparrow.isEnabled = false
+                downarrow.isEnabled = false
+                uparrow.visibility = View.INVISIBLE
+                downarrow.visibility = View.INVISIBLE
+                sharpIB.isEnabled = false
+                flatIB.isEnabled = false
+                naturalIB.isEnabled = false
+                noteCounter = 0
+                for(i in 0..3){
+                    noteViews[i].y = 65F
+                    noteViews[i].visibility = View.VISIBLE
+                    when(muse[((currentPage * 4) + i)].accidental){
+                        's'->{
+                            when(muse[(currentPage * 4) + i].noteType) {
+                                "whole" -> {
+                                    noteViews[i].setImageResource(R.drawable.wholenotesharp)
+                                    uparrow.y = (uparrow.y + 60)//increase y position of uparrow
+                                    noteViews[i].y = noteViews[i].y + 10// increase y position of current image to make scaling appear to not happen
+                                    noteViews[i].scaleY = 1.toFloat()
+                                    noteViews[i].scaleX = 1.toFloat()
+                                }
+                                "half" -> noteViews[i].setImageResource(R.drawable.halfnotesharp)
+                                "quarter" -> noteViews[i].setImageResource(R.drawable.quarternotesharp)
+                                "eighth" -> noteViews[i].setImageResource(R.drawable.eighthnotesharp)
+                                "sixteenth" -> noteViews[i].setImageResource(R.drawable.sixteenthnotesharp)
+                            }
+                            if(muse[(currentPage * 4) + i].noteType != "whole") {
+                                noteViews[i].scaleX = 1.5.toFloat()
+                                noteViews[i].scaleY = 1.5.toFloat()
+                            }
+                        }
+                        'n'->{
+                            when(muse[(currentPage * 4) + i].noteType){
+                                "whole"->{
+                                    noteViews[i].setImageResource(R.drawable.wholenotenatural)
+                                    uparrow.y = (uparrow.y + 60)//increase y position of uparrow
+                                    noteViews[i].y = noteViews[i].y + 10// increase y position of current image to make scaling appear to not happen
+                                    noteViews[i].scaleY = 1.toFloat()
+                                    noteViews[i].scaleX = 1.toFloat()
+                                }
+                                "half" -> noteViews[i].setImageResource(R.drawable.halfnotenatural)
+                                "quarter" -> noteViews[i].setImageResource(R.drawable.quarternotenatural)
+                                "eighth" -> noteViews[i].setImageResource(R.drawable.eighthnotenatural)
+                                "sixteenth"-> noteViews[i].setImageResource(R.drawable.sixteenthnotenatural)
+                            }
+                            if(muse[(currentPage * 4) + i].noteType != "whole") {
+                                noteViews[i].scaleX = 1.5.toFloat()
+                                noteViews[i].scaleY = 1.5.toFloat()
+                            }
+                        }
+                        'b'->{
+                            when(muse[(currentPage * 4) + i].noteType){
+                                "whole"->{
+                                    noteViews[i].setImageResource(R.drawable.wholenoteflat)
+                                    uparrow.y = (uparrow.y + 60)//increase y position of uparrow
+                                    noteViews[i].y = noteViews[i].y + 10// increase y position of current image to make scaling appear to not happen
+                                    noteViews[i].scaleY = 1.toFloat()
+                                    noteViews[i].scaleX = 1.toFloat()
+                                }
+                                "half" -> noteViews[i].setImageResource(R.drawable.halfnoteflat)
+                                "quarter" -> noteViews[i].setImageResource(R.drawable.quarternoteflat)
+                                "eighth" -> noteViews[i].setImageResource(R.drawable.eighthnoteflat)
+                                "sixteenth"-> noteViews[i].setImageResource(R.drawable.sixteenthnoteflat)
+                            }
+                            if(muse[(currentPage * 4) + i].noteType != "whole") {
+                                noteViews[i].scaleX = 1.5.toFloat()
+                                noteViews[i].scaleY = 1.5.toFloat()
+                            }
+                        }
+                        ' '->{
+                            when(muse[(currentPage * 4) + i].noteType){
+                                "whole"-> {
+                                    noteViews[i].setImageResource(R.drawable.wholenotesmall)
+                                    uparrow.y = (uparrow.y + 60)//increase y position of uparrow
+                                    noteViews[i].scaleX = .5.toFloat()//scale image view to accomedate smaller image of whole note
+                                    noteViews[i].scaleY = .5.toFloat()//scale image view to accomedate smaller image of whole note
+                                    noteViews[i].y = noteViews[i].y + 35// increase y position of current image to make scaling appear to not happen
+                                }
+                                "half" -> noteViews[i].setImageResource(R.drawable.halfnotesmall)
+                                "quarter" -> noteViews[i].setImageResource(R.drawable.quarternotesmall)
+                                "eighth" -> noteViews[i].setImageResource(R.drawable.eighthnotesmall)
+                                "sixteenth"-> noteViews[i].setImageResource(R.drawable.sixteenthnotesmall)
+                            }
+                            if(muse[(currentPage * 4) + i].noteType != "whole") {
+                                noteViews[i].scaleX = 1.toFloat()
+                                noteViews[i].scaleY = 1.toFloat()
+                            }
+                        }
+                    }
+                    while(tempPosOnScale < muse[(currentPage * 4) + i].positionOnScale) {
+                        tempPosOnScale++
+                        if (tempPosOnScale == 11) {
+                            noteViews[i].y = noteViews[i].y - (10 * 14)
+                        }
+                        else if(tempPosOnScale >= 0){
+                            noteViews[i].y = noteViews[i].y - 14
+                        }
+
+                    }
+                    tempPosOnScale = 17
+                    while(tempPosOnScale > muse[(currentPage * 4) + i].positionOnScale){
+                        tempPosOnScale--
+                        if (tempPosOnScale == 11) {
+                            noteViews[i].y = noteViews[i].y + (10 * 14)
+                        }
+                        else if(tempPosOnScale >= 0){
+                            noteViews[i].y = noteViews[i].y + 14
+                        }
+                    }
+                    tempPosOnScale = 17
+                }
             }
         }
     }
@@ -621,14 +888,14 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
         }
     }
-
-    private fun onSwipeLeft() {
-        Toast.makeText(this,"left swipe", Toast.LENGTH_LONG).show()
+    fun onSwipeLeft() {
+        swipe(muse,true,uparrowIB,downarrowIB,noteoneIV,notetwoIV,notethreeIV,notefourIV,flatIB,sharpIB,natrualIB,pagesTV)
     }
 
-    private fun onSwipeRight() {
-        Toast.makeText(this,"right swipe", Toast.LENGTH_LONG).show()
+    fun onSwipeRight() {
+        swipe(muse,false,uparrowIB,downarrowIB,noteoneIV,notetwoIV,notethreeIV,notefourIV,flatIB,sharpIB,natrualIB,pagesTV)
     }
+
 
     override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
         TODO("Not yet implemented")
