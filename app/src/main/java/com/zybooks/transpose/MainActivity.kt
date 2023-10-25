@@ -687,7 +687,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
         else{// else swipe is left
-            if(currentPage != 0){
+            if(currentPage != 0 && muse.size % 4 == 0){
                 currentPage--
                 uparrow.isEnabled = false
                 downarrow.isEnabled = false
