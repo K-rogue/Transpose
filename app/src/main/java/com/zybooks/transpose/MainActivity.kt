@@ -595,7 +595,7 @@ class MainActivity : AppCompatActivity() {
                                 "whole" -> {
                                     noteViews[i].setImageResource(R.drawable.wholenotesharp)
                                     uparrow.y = (uparrow.y + 60)//increase y position of uparrow
-                                    noteViews[i].y + 10// increase y position of current image to make scaling appear to not happen
+                                    noteViews[i].y = noteViews[i].y + 10// increase y position of current image to make scaling appear to not happen
                                     noteViews[i].scaleY = 1.toFloat()
                                     noteViews[i].scaleX = 1.toFloat()
                                 }
@@ -712,7 +712,7 @@ class MainActivity : AppCompatActivity() {
                                 "whole" -> {
                                     noteViews[i].setImageResource(R.drawable.wholenotesharp)
                                     uparrow.y = (uparrow.y + 60)//increase y position of uparrow
-                                    noteViews[i].y + 10// increase y position of current image to make scaling appear to not happen
+                                    noteViews[i].y = noteViews[i].y + 10// increase y position of current image to make scaling appear to not happen
                                     noteViews[i].scaleY = 1.toFloat()
                                     noteViews[i].scaleX = 1.toFloat()
                                 }
