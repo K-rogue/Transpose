@@ -11,17 +11,20 @@
     <string name="beatspermeasureET">4</string>
     <string name ="playBT">PLAY</string>
     <string-array name="spinnerItems">
-        <item>CM/am</item>
-        <item>GM/em</item>
-        <item>DM/bm</item>
-        <item>AM/fsm</item>
-        <item>EM/csm</item>
-        <item>BM/gsm</item>
-        <item>FsM/dsm</item>
-        <item>DbM/bbm</item>
-        <item>AbM/fm</item>
-        <item>EbM/cm</item>
-        <item>BbM/gm</item>
-        <item>FM/dm</item>
+        <item>CM_am</item>
+        <item>GM_em</item>
+        <item>DM_bm</item>
+        <item>AM_fsm</item>
+        <item>EM_csm</item>
+        <item>BM_gsm</item>
+        <item>FsM_dsm</item>
+        <item>CsM</item>
+        <item>Cbm</item>
+        <item>Gbm_ebm</item>
+        <item>DbM_bbm</item>
+        <item>AbM_fm</item>
+        <item>EbM_cm</item>
+        <item>BbM_gm</item>
+        <item>FM_dm</item>
     </string-array>
 </resources>

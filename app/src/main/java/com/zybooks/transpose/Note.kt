@@ -9,7 +9,7 @@ data class Note(var noteType: String, var positionOnScale: Int) {
     private var noteName : String
     private var duration : Double
     private var isSoundLoaded: Boolean = false
-    private var realValue : Int = 0
+    var realValue : Int = 0
     var accidental : Char = ' '
     var topStaff : Boolean = true
 
@@ -43,8 +43,8 @@ data class Note(var noteType: String, var positionOnScale: Int) {
 
     fun calculateNoteName(): String {
         val noteNames = listOf("c","db", "d","eb","e","f","gb","g","ab","a","bb","b")
-        val oct = ((positionOnScale) / 12) + 2
-        val letter = noteNames[(positionOnScale) % 12]
+        val oct = ((realValue) / 12) + 2
+        val letter = noteNames[(realValue) % 12]
         noteName = "$letter$oct"
         return "$letter$oct"
     }

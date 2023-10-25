@@ -5,16 +5,18 @@ import android.os.Bundle
 import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
+import android.widget.AdapterView
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
+import android.widget.Spinner
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GestureDetectorCompat
 import java.util.Vector
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     private lateinit var detector: GestureDetectorCompat
     //decleration of global variables variables
     var noteCounter : Int = 0 //note counter is used to determine which image view to place the next note in - - should be replaced with vector.size once vector of objects is created
@@ -42,6 +44,8 @@ class MainActivity : AppCompatActivity() {
         val sharpIB : ImageButton = findViewById<ImageButton>(R.id.sharpIB)
         val natrualIB : ImageButton = findViewById<ImageButton>(R.id.natrualIB)
         val flatIB : ImageButton = findViewById<ImageButton>(R.id.flatIB)
+        val spin : Spinner = findViewById<Spinner>(R.id.spinner)
+        var oldSelectedItem = "CM_am"
 
         // decleration of variables
         var notes : Boolean = true // used to keep track of if notes or rests are being displayed
@@ -79,6 +83,49 @@ class MainActivity : AppCompatActivity() {
             sharpIB.isEnabled = false
             natrualIB.isEnabled = false
             flatIB.isEnabled = false
+        }
+
+        spin.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                val selectedItem = parent?.getItemAtPosition(position).toString()
+                var oldKey = KeySignature.valueOf(oldSelectedItem)
+                var newKey = KeySignature.valueOf(selectedItem)
+                var UIChanges : Pair<Int,Char>
+                // Handle the item selected here
+                // For example:
+                // Toast.makeText(applicationContext, "Selected: $selectedItem", Toast.LENGTH_SHORT).show()
+
+                for (i in muse){
+                    notePlace = determineIV()
+                    UIChanges = transpose(i,oldKey,newKey);
+                    if (UIChanges.first > 0){
+                        for (j in 0.. UIChanges.first) {
+                            moveNote(i, notePlace, R.drawable.uparrowsmall, uparrowIB, downarrowIB)
+                        }
+                    }
+                    else if (UIChanges.first < 0){
+                        for (j in 0.. UIChanges.first){
+                            moveNote(i, notePlace, R.drawable.downarrowsmall, uparrowIB, downarrowIB)
+                            }
+                    }
+                    else{
+
+                    }
+                    if (UIChanges.second == 's'){
+                        //have sharp appear
+                    }
+                    else if (UIChanges.second == 'b'){
+                        //have flat appear
+                    }
+
+                    noteCounter++
+                }
+                //Change staff to key signature
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                // Handle scenario if needed where no item is selected
+            }
         }
 
         //set initial visibility for some image views and buttons to be invisible
@@ -343,7 +390,9 @@ class MainActivity : AppCompatActivity() {
                 notes = true//set notes boolean to true
             }
         }
+
     }
+
 
     //createNote creates a visual and class instatiation of a note, and returns the note to be added to the vector
     fun createNote(currentIV : ImageView, currentImage : Int, uparrow : ImageButton, downarrow : ImageButton, notes : Boolean) : Note {
@@ -427,6 +476,7 @@ class MainActivity : AppCompatActivity() {
         CbM(11, arrayOf(-1,-1,-1,-1,-1,-1,-1), 'b') //7 flats
     }
 
+
     fun transpose(note: Note, fromKey: KeySignature, toKey: KeySignature) : Pair<Int, Char> {
         var difference : Int = toKey.number - fromKey.number //Calculate real number of steps between two notes
         var (UIDifference, flag) = getUIDifference(note, fromKey, toKey) //Get visual number of steps and if it needs an accidental
@@ -479,7 +529,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        var newNoteName : String = availableNotes[((note.positionOnScale % 12) + difference) % 12] //Get new note name from available notes
+        var newNoteName : String = availableNotes[((note.realValue % 12) + difference) % 12] //Get new note name from available notes
         val noteToVal : Array<Pair<String, Int>> //Holds visual difference values
         noteToVal = arrayOf(Pair("cb", 0), Pair("c", 0), Pair("cs", 0), Pair("db", 1), Pair("d", 1), Pair("ds", 1), Pair("eb", 2),
                             Pair("e", 2), Pair("es", 2), Pair("fb", 3), Pair("f", 3), Pair("fs", 3), Pair("gb", 4), Pair("g", 4),
@@ -489,7 +539,7 @@ class MainActivity : AppCompatActivity() {
         var secondNoteVal : Int = 0 //New visual value
 
         for (i in noteToVal){
-            if (note.getNoteName() == i.first) //If name matches string in list, then set the visual value
+            if (note.getNoteName().substring(0,1) == i.first) //If name matches string in list, then set the visual value
                 firstNoteVal = i.second
             if (newNoteName == i.first)
                 secondNoteVal = i.second
@@ -498,7 +548,7 @@ class MainActivity : AppCompatActivity() {
         UIDifference = secondNoteVal - firstNoteVal //Update visual difference
 
         if (newNoteName.length == 2){ //Sharp or flat notes have 2 characters, set flag
-            if (newNoteName.substring(1,1) == "s")
+            if (newNoteName.substring(1,2) == "s")
                 flag = 's'
             else
                 flag = 'b'
@@ -579,6 +629,16 @@ class MainActivity : AppCompatActivity() {
     private fun onSwipeRight() {
         Toast.makeText(this,"right swipe", Toast.LENGTH_LONG).show()
     }
+
+    override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
+        TODO("Not yet implemented")
+    }
+
+    override fun onNothingSelected(p0: AdapterView<*>?) {
+        TODO("Not yet implemented")
+    }
+
+
 }
 /* Code to play note c2
         var myNote = Note("quarter", 0)
