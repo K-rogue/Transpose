@@ -6,10 +6,10 @@ import android.util.Log
 data class Note(var noteType: String, var positionOnScale: Int) {
     private val soundPool: SoundPool
     private var soundId: Int? = null
-    private var noteName : String
+    private var noteName : String = "b4"
     private var duration : Double
     private var isSoundLoaded: Boolean = false
-    var realValue : Int = 0
+    var realValue : Int = 35
     var accidental : Char = ' '
     var topStaff : Boolean = true
 

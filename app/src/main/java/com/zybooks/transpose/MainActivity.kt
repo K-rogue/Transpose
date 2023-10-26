@@ -109,17 +109,19 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
                 // For example:
                 // Toast.makeText(applicationContext, "Selected: $selectedItem", Toast.LENGTH_SHORT).show()
 
-                for (i in muse){
+                for (i in 0 until muse.size){
+                    var thisNote = muse[((currentPage * 4) + ((noteCounter-1) % 4))]
                     notePlace = determineIV()
-                    UIChanges = transpose(i,oldKey,newKey);
+                    UIChanges = transpose(thisNote,oldKey,newKey);
+                    println("UICHANGES: " + UIChanges.first)
                     if (UIChanges.first > 0){
-                        for (j in 0.. UIChanges.first) {
-                            moveNote(i, notePlace, R.drawable.uparrowsmall, uparrowIB, downarrowIB)
+                        for (j in 0 .. UIChanges.first) {
+                            moveNote(thisNote, notePlace, R.drawable.uparrowsmall, uparrowIB, downarrowIB)
                         }
                     }
                     else if (UIChanges.first < 0){
-                        for (j in 0.. UIChanges.first){
-                            moveNote(i, notePlace, R.drawable.downarrowsmall, uparrowIB, downarrowIB)
+                        for (j in UIChanges.first until 0){
+                            moveNote(thisNote, notePlace, R.drawable.downarrowsmall, uparrowIB, downarrowIB)
                             }
                     }
                     else{
@@ -127,12 +129,14 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
                     }
                     if (UIChanges.second == 's'){
                         //have sharp appear
+                        sharpIB.performClick()
                     }
                     else if (UIChanges.second == 'b'){
-                        //have flat appear
+                        flatIB.performClick()
                     }
 
                     noteCounter++
+                    oldSelectedItem = selectedItem
                 }
                 when(newKey){
                     KeySignature.CM_am -> staffIV.setImageResource(R.drawable.cm_am)
@@ -304,7 +308,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
                         notePlace.scaleX = .5.toFloat()
                         notePlace.scaleY = .5.toFloat()
                         if(oldAccidental == ' ')
-                        notePlace.y= notePlace.y +25
+                            notePlace.y= notePlace.y +25
                     }
                 }
             }
@@ -508,7 +512,13 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     fun transpose(note: Note, fromKey: KeySignature, toKey: KeySignature) : Pair<Int, Char> {
         var difference : Int = toKey.number - fromKey.number //Calculate real number of steps between two notes
         var (UIDifference, flag) = getUIDifference(note, fromKey, toKey) //Get visual number of steps and if it needs an accidental
-        note.forcePositionOnScale(note.positionOnScale - difference, ' ') //Update note
+        if (difference > 6){
+            difference -= 12
+        }
+        else if (difference < -6){
+            difference += 12
+        }
+        note.forcePositionOnScale(note.positionOnScale - difference, note.accidental) //Update note
         return Pair(UIDifference, flag) //Return pair of visual steps with accidental
     }
 
@@ -597,12 +607,14 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
                 uparrow.y = uparrow.y - (10 * 14)
                 downarrow.y = downarrow.y - (10 * 14)
                 currentIV.y = currentIV.y - (10 * 14)
+                println("Note accidental: " + note.accidental)
                 note.forcePositionOnScale(note.positionOnScale + 1, note.accidental)
             }
             else if(note.positionOnScale < 22){
                 uparrow.y = uparrow.y - 14
                 downarrow.y = downarrow.y - 14
                 currentIV.y = currentIV.y - 14
+                println("Note accidental: " + note.accidental)
                 note.forcePositionOnScale(note.positionOnScale + 1, note.accidental)
             }
         }
@@ -611,12 +623,14 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
                 uparrow.y = uparrow.y + (10 * 14)
                 downarrow.y = downarrow.y + (10 * 14)
                 currentIV.y = currentIV.y + (10 * 14)
+                println("Note accidental: " + note.accidental)
                 note.forcePositionOnScale(note.positionOnScale - 1, note.accidental)
             }
             else if(note.positionOnScale >= 0){
                 uparrow.y = uparrow.y + 14
                 downarrow.y = downarrow.y + 14
                 currentIV.y = currentIV.y + 14
+                println("Note accidental: " + note.accidental)
                 note.forcePositionOnScale(note.positionOnScale - 1, note.accidental)
             }
         }
@@ -624,6 +638,7 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     fun swipeLeft(currentPage : Int, muse : Vector<Note>){
 
     }
+
     fun swipe(muse : Vector<Note>, direction : Boolean,uparrow : ImageButton, downarrow : ImageButton, noteOneIV : ImageView, noteTwoIV : ImageView, noteThreeIV : ImageView, noteFourIV : ImageView, flatIB : ImageButton, sharpIB : ImageButton, naturalIB : ImageButton, pagesTV : TextView){
         var noteViews = arrayOf(noteOneIV,noteTwoIV,noteThreeIV,noteFourIV)
         var tempPosOnScale = 17
